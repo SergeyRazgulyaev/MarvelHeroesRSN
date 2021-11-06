@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		C59A15DC27171809007B5347 /* NetworkServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59A15DB27171809007B5347 /* NetworkServiceProtocol.swift */; };
-		C59A15DE2717184A007B5347 /* DateFormatterServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59A15DD2717184A007B5347 /* DateFormatterServiceProtocol.swift */; };
 		C59A161F2717807A007B5347 /* Alertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59A161E2717807A007B5347 /* Alertable.swift */; };
 		C59A16212717883E007B5347 /* NetworkServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59A16202717883E007B5347 /* NetworkServiceDelegate.swift */; };
 		C5AE63C327144984009BB463 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE63C227144984009BB463 /* AppDelegate.swift */; };
@@ -26,13 +25,11 @@
 		C5AE63F527158CB2009BB463 /* HeroThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE63F427158CB2009BB463 /* HeroThumbnail.swift */; };
 		C5AE64172715979B009BB463 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE64162715979B009BB463 /* NetworkService.swift */; };
 		C5AE64192715F642009BB463 /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE64182715F642009BB463 /* Hero.swift */; };
-		C5AE64202716BB44009BB463 /* DateFormatterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE641F2716BB44009BB463 /* DateFormatterService.swift */; };
 		C5D283CC271E233400F13297 /* URLParametersContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D283CB271E233400F13297 /* URLParametersContainer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		C59A15DB27171809007B5347 /* NetworkServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceProtocol.swift; sourceTree = "<group>"; };
-		C59A15DD2717184A007B5347 /* DateFormatterServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterServiceProtocol.swift; sourceTree = "<group>"; };
 		C59A161E2717807A007B5347 /* Alertable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alertable.swift; sourceTree = "<group>"; };
 		C59A16202717883E007B5347 /* NetworkServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceDelegate.swift; sourceTree = "<group>"; };
 		C5AE63BF27144984009BB463 /* MarvelHeroesRSN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarvelHeroesRSN.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,7 +49,6 @@
 		C5AE63F427158CB2009BB463 /* HeroThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroThumbnail.swift; sourceTree = "<group>"; };
 		C5AE64162715979B009BB463 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		C5AE64182715F642009BB463 /* Hero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
-		C5AE641F2716BB44009BB463 /* DateFormatterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterService.swift; sourceTree = "<group>"; };
 		C5D283CB271E233400F13297 /* URLParametersContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLParametersContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -226,18 +222,8 @@
 			isa = PBXGroup;
 			children = (
 				C5AE63DB2714518D009BB463 /* Network */,
-				C5AE641E2716BB2F009BB463 /* DateFormatter */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		C5AE641E2716BB2F009BB463 /* DateFormatter */ = {
-			isa = PBXGroup;
-			children = (
-				C59A15DD2717184A007B5347 /* DateFormatterServiceProtocol.swift */,
-				C5AE641F2716BB44009BB463 /* DateFormatterService.swift */,
-			);
-			path = DateFormatter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -321,8 +307,6 @@
 				C5AE63EF27158C15009BB463 /* GetHeroesResult.swift in Sources */,
 				C5AE63F127158C4A009BB463 /* HeroesData.swift in Sources */,
 				C5AE63E22714535D009BB463 /* MainScreenViewController.swift in Sources */,
-				C59A15DE2717184A007B5347 /* DateFormatterServiceProtocol.swift in Sources */,
-				C5AE64202716BB44009BB463 /* DateFormatterService.swift in Sources */,
 				C5D283CC271E233400F13297 /* URLParametersContainer.swift in Sources */,
 				C59A161F2717807A007B5347 /* Alertable.swift in Sources */,
 				C5AE64172715979B009BB463 /* NetworkService.swift in Sources */,

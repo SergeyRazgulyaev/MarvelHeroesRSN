@@ -17,7 +17,6 @@ class MainScreenViewController: UIViewController, Alertable {
     private let numberOfCellsInCollectionView: Int = 3
     
     //MARK: - Properties
-    private let dateFormatter: DateFormatterServiceProtocol
     private let cellIdentifier: String = "MainScreenCollectionViewCell"
     private let cellNumberFromEnd: Int = 4
     private var heroes: [Hero] = []
@@ -52,9 +51,8 @@ class MainScreenViewController: UIViewController, Alertable {
     }
     
     //MARK: - Init
-    init(networkService: NetworkServiceProtocol, dateFormatter: DateFormatterServiceProtocol) {
+    init(networkService: NetworkServiceProtocol) {
         self.networkService = networkService
-        self.dateFormatter = dateFormatter
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -159,18 +157,14 @@ extension MainScreenViewController {
         for heroWithThumbnails in heroesWithThumbnails {
             if !heroWithThumbnails.thumbnail.thumbnailPath.contains("image_not_available") && heroWithThumbnails.thumbnail.thumbnailExtension != "gif" {
                 let thumbnailPathWithExtension = heroWithThumbnails.thumbnail.thumbnailPath + "." + heroWithThumbnails.thumbnail.thumbnailExtension
-                
-                let date = Date()
-                let stringFromDate = dateFormatter.getStringFromDate(date: date)
-                
+                                
                 if let url = URL(string: thumbnailPathWithExtension),
                    let data = try? Data(contentsOf: url),
                    let heroAvatarImage = UIImage(data: data) {
                     let hero = Hero(id: heroWithThumbnails.id,
                                     name: heroWithThumbnails.name,
                                     description: heroWithThumbnails.description,
-                                    image: heroAvatarImage,
-                                    imageUploadDate: stringFromDate)
+                                    image: heroAvatarImage)
                     tempArray.append(hero)
                 }
             }

@@ -13,5 +13,4 @@ struct Hero {
     let name: String
     let description: String
     let image: UIImage
-    let imageUploadDate: String
 }

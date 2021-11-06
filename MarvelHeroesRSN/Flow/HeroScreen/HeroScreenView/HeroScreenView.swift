@@ -11,9 +11,8 @@ class HeroScreenView: UIView {
     //MARK: - UI properties
     private var heroAvatarViewHeight: CGFloat { UIScreen.main.bounds.width }
     private let heroNameLabelHeight: CGFloat = 60.0
-    private let imageUploadDateLabelHeight: CGFloat = 30.0
-    private var heroDescriptionTextViewHeight: CGFloat { UIScreen.main.bounds.height / 2.0 }
-    private var stackViewHeight: CGFloat { heroAvatarViewHeight + heroNameLabelHeight + imageUploadDateLabelHeight + heroDescriptionTextViewHeight }
+    private var heroDescriptionTextViewHeight: CGFloat = 200.0
+    private var stackViewHeight: CGFloat { heroAvatarViewHeight + heroNameLabelHeight + heroDescriptionTextViewHeight }
     
     //MARK: - UI components
     private(set) lazy var scrollView: UIScrollView = {
@@ -39,17 +38,6 @@ class HeroScreenView: UIView {
         imageView.heightAnchor.constraint(equalToConstant: heroAvatarViewHeight).isActive = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
-    }()
-    
-    private(set) lazy var imageUploadDateLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: "Avenir Next", size: 20.0)
-        label.textColor = .white
-        label.textAlignment = .center
-        label.backgroundColor = .systemRed
-        label.heightAnchor.constraint(equalToConstant: imageUploadDateLabelHeight).isActive = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
     }()
     
     private(set) lazy var heroNameLabel: UILabel = {
@@ -90,7 +78,6 @@ class HeroScreenView: UIView {
     //MARK: - Configuration methods
     private func configureStackView() {
         stackView.addArrangedSubview(heroAvatarView)
-        stackView.addArrangedSubview(imageUploadDateLabel)
         stackView.addArrangedSubview(heroNameLabel)
         stackView.addArrangedSubview(heroDescriptionTextView)
     }
@@ -125,6 +112,5 @@ class HeroScreenView: UIView {
         } else {
             heroDescriptionTextView.text = "\(hero.name):\n\(hero.description)"
         }
-        imageUploadDateLabel.text = "Image uploaded: \(hero.imageUploadDate)"
     }
 }

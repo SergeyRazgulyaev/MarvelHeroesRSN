@@ -32,12 +32,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                                                             hash: urlHash,
                                                             limit: limit,
                                                             offset: offset)
-        
         let networkService = NetworkService(urlParametersContainer: urlParametersContainer)
-        let dateFormatter = DateFormatterService()
-        
-        let mainScreenViewController = MainScreenViewController(networkService: networkService,
-                                                                dateFormatter: dateFormatter)
+        let mainScreenViewController = MainScreenViewController(networkService: networkService)
         networkService.delegate = mainScreenViewController
         
         let navigationController = UINavigationController(rootViewController: mainScreenViewController)
