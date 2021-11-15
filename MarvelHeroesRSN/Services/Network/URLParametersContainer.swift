@@ -14,6 +14,6 @@ struct URLParametersContainer {
     var ts: Int
     var apiKey: String
     var hash: String
-    var limit: Int
-    var offset: Int
+    var limit: Int?
+    var offset: Int?
 }

@@ -27,8 +27,8 @@ class NetworkService: NetworkServiceProtocol {
             URLQueryItem(name: "ts", value: "\(urlParametersContainer.ts)"),
             URLQueryItem(name: "apikey", value: "\(urlParametersContainer.apiKey)"),
             URLQueryItem(name: "hash", value: "\(urlParametersContainer.hash)"),
-            URLQueryItem(name: "limit", value: "\(urlParametersContainer.limit)"),
-            URLQueryItem(name: "offset", value: "\(urlParametersContainer.offset)")
+            URLQueryItem(name: "limit", value: "\(urlParametersContainer.limit ?? 1)"),
+            URLQueryItem(name: "offset", value: "\(urlParametersContainer.offset ?? 0)")
         ]
         return urlComponents
     }
