@@ -11,7 +11,7 @@ class HeroScreenView: UIView {
     //MARK: - UI properties
     private var heroAvatarViewHeight: CGFloat { UIScreen.main.bounds.width }
     private let heroNameLabelHeight: CGFloat = 60.0
-    private var heroDescriptionTextViewHeight: CGFloat = 200.0
+    private var heroDescriptionTextViewHeight: CGFloat = 250.0
     private var stackViewHeight: CGFloat { heroAvatarViewHeight + heroNameLabelHeight + heroDescriptionTextViewHeight }
     
     //MARK: - UI components
@@ -55,6 +55,7 @@ class HeroScreenView: UIView {
     private(set) lazy var heroDescriptionTextView: UITextView = {
         let textView = UITextView()
         textView.font = UIFont(name: "Avenir Next", size: 20.0)
+        textView.isEditable = false
         textView.textAlignment = .center
         textView.backgroundColor = .black
         textView.textColor = .white

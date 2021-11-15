@@ -19,6 +19,7 @@ class MainScreenViewController: UIViewController, Alertable {
     //MARK: - Properties
     private let cellIdentifier: String = "MainScreenCollectionViewCell"
     private let cellNumberFromEnd: Int = 4
+    private var heroesManager = HeroesManager()
     private var heroes: [Hero] = []
     
     //MARK: - Properties for Interaction with Network
@@ -144,42 +145,23 @@ extension MainScreenViewController {
         networkService.loadHeroesData(limit: limit, offset: offset) { [weak self] result in
             switch result {
             case let .success(heroesWithThumbnails):
-                self?.setHeroesArray(heroesWithThumbnails: heroesWithThumbnails)
+                if let filteredHeroes = self?.heroesManager.getFilteredHeroesArray(fromHeroesWithThumbnails: heroesWithThumbnails, isRefreshingData: self?.isRefreshingData ?? true) {
+                    DispatchQueue.main.async {
+                        self?.heroes = filteredHeroes
+                        self?.mainScreenView.collectionView.reloadData()
+                        self?.offset += self?.limit ?? 0
+                    }
+                }
+                DispatchQueue.main.async {
+                    self?.mainScreenView.loadingDataStatusLabel.isHidden = true
+                    self?.mainScreenView.loadingActivityIndicator.stopAnimating()
+                    self?.isDataLoading = false
+                    self?.isRefreshingData = false
+                }
                 completion?()
             case let .failure(error):
                 print(error.localizedDescription)
             }
-        }
-    }
-    
-    func setHeroesArray(heroesWithThumbnails: [HeroWithThumbnails]) {
-        var tempArray: [Hero] = []
-        for heroWithThumbnails in heroesWithThumbnails {
-            if !heroWithThumbnails.thumbnail.thumbnailPath.contains("image_not_available") && heroWithThumbnails.thumbnail.thumbnailExtension != "gif" {
-                let thumbnailPathWithExtension = heroWithThumbnails.thumbnail.thumbnailPath + "." + heroWithThumbnails.thumbnail.thumbnailExtension
-                                
-                if let url = URL(string: thumbnailPathWithExtension),
-                   let data = try? Data(contentsOf: url),
-                   let heroAvatarImage = UIImage(data: data) {
-                    let hero = Hero(id: heroWithThumbnails.id,
-                                    name: heroWithThumbnails.name,
-                                    description: heroWithThumbnails.description,
-                                    image: heroAvatarImage)
-                    tempArray.append(hero)
-                }
-            }
-        }
-        DispatchQueue.main.async {
-            if self.isRefreshingData {
-                self.heroes = []
-            }
-            self.heroes.append(contentsOf: tempArray)
-            self.mainScreenView.collectionView.reloadData()
-            self.mainScreenView.loadingDataStatusLabel.isHidden = true
-            self.mainScreenView.loadingActivityIndicator.stopAnimating()
-            self.isDataLoading = false
-            self.isRefreshingData = false
-            self.offset += self.limit
         }
     }
 }
