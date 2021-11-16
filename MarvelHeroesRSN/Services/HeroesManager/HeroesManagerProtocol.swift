@@ -8,6 +8,8 @@
 import Foundation
 
 protocol HeroesManagerProtocol {
+    var heroes: [Hero] { get }
+    
     func getHero(byID id: Int) -> Hero?
     func getHeroes(fromHeroesNetworkData heroesNetworkData: [HeroWithThumbnails],
                    isRefreshingData: Bool,

@@ -8,7 +8,7 @@
 import UIKit
 
 class HeroesManager: HeroesManagerProtocol {
-    private var heroes: [Hero] = []
+    private(set) var heroes: [Hero] = []
     
     func getHero(byID id: Int) -> Hero? {
         guard let hero = heroes.filter({ $0.id == id }).first else { return nil }

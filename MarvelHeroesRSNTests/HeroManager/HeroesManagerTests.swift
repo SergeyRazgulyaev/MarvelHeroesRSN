@@ -34,9 +34,9 @@ class HeroesManagerTests: XCTestCase {
                                                             thumbnail: HeroThumbnail(thumbnailPath: "http://i.annihil.us/u/prod/marvel/i/mg/5/e0/4c0035c9c425d",
                                                                                      thumbnailExtension: "gif"))
         heroesWithThumbnailsTestArray = []
-        heroesWithThumbnailsTestArray?.append(heroWithGoodThumbnails!)
-        heroesWithThumbnailsTestArray?.append(heroWithBadPathThumbnails!)
-        heroesWithThumbnailsTestArray?.append(heroWithBadExtensionThumbnails!)
+//        heroesWithThumbnailsTestArray?.append(heroWithGoodThumbnails!)
+//        heroesWithThumbnailsTestArray?.append(heroWithBadPathThumbnails!)
+//        heroesWithThumbnailsTestArray?.append(heroWithBadExtensionThumbnails!)
         heroesTestArray = []
     }
     
@@ -50,6 +50,9 @@ class HeroesManagerTests: XCTestCase {
     }
     
     func testGetFilteredHeroesArrayCount() throws {
+        heroesWithThumbnailsTestArray?.append(heroWithGoodThumbnails!)
+        heroesWithThumbnailsTestArray?.append(heroWithBadPathThumbnails!)
+        heroesWithThumbnailsTestArray?.append(heroWithBadExtensionThumbnails!)
         heroesTestArray = sut?.getHeroes(fromHeroesNetworkData: heroesWithThumbnailsTestArray ?? [],
                                          isRefreshingData: false,
                                          isCutOffUnsuccessfulHeroesCard: true)
@@ -58,6 +61,9 @@ class HeroesManagerTests: XCTestCase {
     }
     
     func testGetAllHeroesArrayCount() throws {
+        heroesWithThumbnailsTestArray?.append(heroWithGoodThumbnails!)
+        heroesWithThumbnailsTestArray?.append(heroWithBadPathThumbnails!)
+        heroesWithThumbnailsTestArray?.append(heroWithBadExtensionThumbnails!)
         heroesTestArray = sut?.getHeroes(fromHeroesNetworkData: heroesWithThumbnailsTestArray ?? [],
                                          isRefreshingData: false,
                                          isCutOffUnsuccessfulHeroesCard: false)
@@ -65,13 +71,42 @@ class HeroesManagerTests: XCTestCase {
     }
     
     func testGetHeroByIDFromHeroesManager() throws {
+        heroesWithThumbnailsTestArray?.append(heroWithGoodThumbnails!)
+        heroesWithThumbnailsTestArray?.append(heroWithBadPathThumbnails!)
+        heroesWithThumbnailsTestArray?.append(heroWithBadExtensionThumbnails!)
         heroesTestArray = sut?.getHeroes(fromHeroesNetworkData: heroesWithThumbnailsTestArray ?? [],
                                          isRefreshingData: false,
-                                         isCutOffUnsuccessfulHeroesCard: true)
-        let hero = sut?.getHero(byID: 1)
-        XCTAssertEqual(hero?.id, 1)
-        XCTAssertEqual(hero?.name, "testName1")
-        XCTAssertEqual(hero?.description, "testDescription1")
+                                         isCutOffUnsuccessfulHeroesCard: false)
+        let hero = sut?.getHero(byID: 2)
+        XCTAssertEqual(hero?.id, 2)
+        XCTAssertEqual(hero?.name, "testName2")
+        XCTAssertEqual(hero?.description, "testDescription2")
     }
     
+    func testIsHeroesArrayEmptyWhenRefresh() {
+        heroesWithThumbnailsTestArray?.append(heroWithGoodThumbnails!)
+        heroesTestArray = sut?.getHeroes(fromHeroesNetworkData: heroesWithThumbnailsTestArray ?? [],
+                                         isRefreshingData: false,
+                                         isCutOffUnsuccessfulHeroesCard: false)
+        XCTAssertEqual(heroesTestArray?.count, 1)
+        XCTAssertEqual(sut?.heroes.count, 1)
+        
+        heroesTestArray = sut?.getHeroes(fromHeroesNetworkData: heroesWithThumbnailsTestArray ?? [],
+                                         isRefreshingData: false,
+                                         isCutOffUnsuccessfulHeroesCard: false)
+        XCTAssertEqual(heroesTestArray?.count, 2)
+        XCTAssertEqual(sut?.heroes.count, 2)
+        
+        heroesTestArray = sut?.getHeroes(fromHeroesNetworkData: heroesWithThumbnailsTestArray ?? [],
+                                         isRefreshingData: false,
+                                         isCutOffUnsuccessfulHeroesCard: false)
+        XCTAssertEqual(heroesTestArray?.count, 3)
+        XCTAssertEqual(sut?.heroes.count, 3)
+        
+        heroesTestArray = sut?.getHeroes(fromHeroesNetworkData: heroesWithThumbnailsTestArray ?? [],
+                                         isRefreshingData: true,
+                                         isCutOffUnsuccessfulHeroesCard: false)
+        XCTAssertEqual(heroesTestArray?.count, 1)
+        XCTAssertEqual(sut?.heroes.count, 1)
+    }
 }
