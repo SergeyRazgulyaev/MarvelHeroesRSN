@@ -89,24 +89,24 @@ class HeroesManagerTests: XCTestCase {
                                          isRefreshingData: false,
                                          isCutOffUnsuccessfulHeroesCard: false)
         XCTAssertEqual(heroesTestArray?.count, 1)
-        XCTAssertEqual(sut?.heroes.count, 1)
+        XCTAssertEqual(sut?.heroesStorage.count, 1)
         
         heroesTestArray = sut?.getHeroes(fromHeroesNetworkData: heroesWithThumbnailsTestArray ?? [],
                                          isRefreshingData: false,
                                          isCutOffUnsuccessfulHeroesCard: false)
         XCTAssertEqual(heroesTestArray?.count, 2)
-        XCTAssertEqual(sut?.heroes.count, 2)
+        XCTAssertEqual(sut?.heroesStorage.count, 2)
         
         heroesTestArray = sut?.getHeroes(fromHeroesNetworkData: heroesWithThumbnailsTestArray ?? [],
                                          isRefreshingData: false,
                                          isCutOffUnsuccessfulHeroesCard: false)
         XCTAssertEqual(heroesTestArray?.count, 3)
-        XCTAssertEqual(sut?.heroes.count, 3)
+        XCTAssertEqual(sut?.heroesStorage.count, 3)
         
         heroesTestArray = sut?.getHeroes(fromHeroesNetworkData: heroesWithThumbnailsTestArray ?? [],
                                          isRefreshingData: true,
                                          isCutOffUnsuccessfulHeroesCard: false)
         XCTAssertEqual(heroesTestArray?.count, 1)
-        XCTAssertEqual(sut?.heroes.count, 1)
+        XCTAssertEqual(sut?.heroesStorage.count, 1)
     }
 }

@@ -146,8 +146,7 @@ extension MainScreenViewController {
         networkService.loadHeroesData(limit: limit, offset: offset) { [weak self] result in
             switch result {
             case let .success(heroesWithThumbnails):
-                if let heroesFromHeroesManager = self?.heroesManager.getHeroes(fromHeroesNetworkData: heroesWithThumbnails, isRefreshingData: self?.isRefreshingData ?? false, isCutOffUnsuccessfulHeroesCard: self?.isCutOffUnsuccessfulHeroesCard ?? true) {
-//                if let filteredHeroes = self?.heroesManager.getFilteredHeroesArray(fromHeroesWithThumbnails: heroesWithThumbnails, isRefreshingData: self?.isRefreshingData ?? true) {
+                if let heroesFromHeroesManager = self?.heroesManager.getHeroes(fromHeroesNetworkData: heroesWithThumbnails, isRefreshingData: self?.isRefreshingData ?? false, isCutOffUnsuccessfulHeroesCard: self?.isCutOffUnsuccessfulHeroesCard ?? false) {
                     DispatchQueue.main.async {
                         self?.heroes = heroesFromHeroesManager
                         self?.mainScreenView.collectionView.reloadData()

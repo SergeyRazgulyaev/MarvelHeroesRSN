@@ -8,10 +8,10 @@
 import UIKit
 
 class HeroesManager: HeroesManagerProtocol {
-    private(set) var heroes: [Hero] = []
+    private(set) var heroesStorage: [Hero] = []
     
     func getHero(byID id: Int) -> Hero? {
-        guard let hero = heroes.filter({ $0.id == id }).first else { return nil }
+        guard let hero = heroesStorage.filter({ $0.id == id }).first else { return nil }
         return hero
     }
     
@@ -20,7 +20,7 @@ class HeroesManager: HeroesManagerProtocol {
                    isCutOffUnsuccessfulHeroesCard: Bool) -> [Hero] {
         var tempArray: [Hero] = []
         if isRefreshingData {
-            heroes = []
+            heroesStorage = []
         }
         if isCutOffUnsuccessfulHeroesCard {
             for heroNetworkData in heroesNetworkData {
@@ -37,9 +37,8 @@ class HeroesManager: HeroesManagerProtocol {
                 }
             }
         }
-        heroes += tempArray
-        print("heroes.count = \(heroes.count)")
-        return heroes
+        heroesStorage += tempArray
+        return heroesStorage
         
     }
     
