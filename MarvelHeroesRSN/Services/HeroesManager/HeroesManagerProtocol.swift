@@ -12,5 +12,4 @@ protocol HeroesManagerProtocol {
     func makeHeroesArray(fromHeroesNetworkData heroesNetworkData: [HeroWithThumbnails],
                    isRefreshingData: Bool,
                    isCutOffUnsuccessfulHeroesCard: Bool) -> [Hero]
-    
 }

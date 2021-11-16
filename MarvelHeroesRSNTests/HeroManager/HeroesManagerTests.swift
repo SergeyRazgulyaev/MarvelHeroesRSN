@@ -13,6 +13,7 @@ class HeroesManagerTests: XCTestCase {
     var heroWithGoodThumbnails: HeroWithThumbnails?
     var heroWithBadPathThumbnails: HeroWithThumbnails?
     var heroWithBadExtensionThumbnails: HeroWithThumbnails?
+    var heroWithCrashedExtensionThumbnails: HeroWithThumbnails?
     var heroesWithThumbnailsTestArray: [HeroWithThumbnails]?
     var heroesTestArray: [Hero]?
     
@@ -33,6 +34,11 @@ class HeroesManagerTests: XCTestCase {
                                                             description: "testDescription3",
                                                             thumbnail: HeroThumbnail(thumbnailPath: "http://i.annihil.us/u/prod/marvel/i/mg/5/e0/4c0035c9c425d",
                                                                                      thumbnailExtension: "gif"))
+        heroWithCrashedExtensionThumbnails = HeroWithThumbnails(id: 4,
+                                                            name: "testName4",
+                                                            description: "testDescription4",
+                                                            thumbnail: HeroThumbnail(thumbnailPath: "http://i.annihil.us/u/prod/marvel/i/mg/6/20/52602f21f29ec",
+                                                                                     thumbnailExtension: "crashedExtension"))
         heroesWithThumbnailsTestArray = []
         heroesWithThumbnailsTestArray?.append(heroWithGoodThumbnails!)
         heroesWithThumbnailsTestArray?.append(heroWithBadPathThumbnails!)
@@ -45,6 +51,7 @@ class HeroesManagerTests: XCTestCase {
         heroWithGoodThumbnails = nil
         heroWithBadPathThumbnails = nil
         heroWithBadExtensionThumbnails = nil
+        heroWithCrashedExtensionThumbnails = nil
         heroesWithThumbnailsTestArray = nil
         heroesTestArray = nil
     }
@@ -64,7 +71,7 @@ class HeroesManagerTests: XCTestCase {
         XCTAssertEqual(heroesTestArray?.count, 3)
     }
     
-    func testGetHeroByIDFromHeroesManager() throws {
+    func testGetHeroByIDFromHeroesManager() {
         heroesTestArray = sut?.makeHeroesArray(fromHeroesNetworkData: heroesWithThumbnailsTestArray ?? [],
                                          isRefreshingData: false,
                                          isCutOffUnsuccessfulHeroesCard: false)
@@ -72,6 +79,15 @@ class HeroesManagerTests: XCTestCase {
         XCTAssertEqual(hero?.id, 2)
         XCTAssertEqual(hero?.name, "testName2")
         XCTAssertEqual(hero?.description, "testDescription2")
+    }
+    
+    func testGenNilHeroByIDFromHeroesManager() {
+        heroesWithThumbnailsTestArray = []
+        heroesTestArray = sut?.makeHeroesArray(fromHeroesNetworkData: heroesWithThumbnailsTestArray ?? [],
+                                         isRefreshingData: false,
+                                         isCutOffUnsuccessfulHeroesCard: false)
+        let hero = sut?.getHero(byID: 1)
+        XCTAssertEqual(hero, nil)
     }
     
     func testIsHeroesArrayEmptyWhenRefresh() {
@@ -91,5 +107,15 @@ class HeroesManagerTests: XCTestCase {
                                          isRefreshingData: true,
                                          isCutOffUnsuccessfulHeroesCard: false)
         XCTAssertEqual(heroesTestArray?.count, 1)
+    }
+    
+    func testNilImageWhenMakeHero() {
+        heroesWithThumbnailsTestArray = []
+        heroesWithThumbnailsTestArray?.append(heroWithCrashedExtensionThumbnails!)
+        heroesTestArray = sut?.makeHeroesArray(fromHeroesNetworkData: heroesWithThumbnailsTestArray ?? [],
+                                         isRefreshingData: false,
+                                         isCutOffUnsuccessfulHeroesCard: false)
+        let hero = sut?.getHero(byID: 4)
+        XCTAssertEqual(hero, nil)
     }
 }
