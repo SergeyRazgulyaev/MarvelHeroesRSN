@@ -10,26 +10,44 @@ import UIKit
 class HeroesManager: HeroesManagerProtocol {
     private var heroes: [Hero] = []
     
-    func getFilteredHeroesArray(fromHeroesWithThumbnails heroesWithThumbnails: [HeroWithThumbnails], isRefreshingData: Bool) -> [Hero] {
+    func getHeroes(fromHeroesNetworkData heroesNetworkData: [HeroWithThumbnails],
+                   isRefreshingData: Bool,
+                   isCutOffUnsuccessfulHeroesCard: Bool) -> [Hero] {
+        var tempArray: [Hero] = []
         if isRefreshingData {
             heroes = []
         }
-        
-        for heroWithThumbnails in heroesWithThumbnails {
-            if !heroWithThumbnails.thumbnail.thumbnailPath.contains("image_not_available") && heroWithThumbnails.thumbnail.thumbnailExtension != "gif" {
-                let thumbnailPathWithExtension = heroWithThumbnails.thumbnail.thumbnailPath + "." + heroWithThumbnails.thumbnail.thumbnailExtension
-                
-                if let url = URL(string: thumbnailPathWithExtension),
-                   let data = try? Data(contentsOf: url),
-                   let heroAvatarImage = UIImage(data: data) {
-                    let hero = Hero(id: heroWithThumbnails.id,
-                                    name: heroWithThumbnails.name,
-                                    description: heroWithThumbnails.description,
-                                    image: heroAvatarImage)
-                    heroes.append(hero)
+        if isCutOffUnsuccessfulHeroesCard {
+            for heroNetworkData in heroesNetworkData {
+                if !heroNetworkData.thumbnail.thumbnailPath.contains("image_not_available") && heroNetworkData.thumbnail.thumbnailExtension != "gif" {
+                    if let hero = makeHero(fromHeroNetworkData: heroNetworkData) {
+                        tempArray.append(hero)
+                    }
+                }
+            }
+        } else {
+            for heroNetworkData in heroesNetworkData {
+                if let hero = makeHero(fromHeroNetworkData: heroNetworkData) {
+                    tempArray.append(hero)
                 }
             }
         }
+        heroes += tempArray
+        print("heroes.count = \(heroes.count)")
         return heroes
+        
+    }
+    
+    private func makeHero(fromHeroNetworkData heroNetworkData: HeroWithThumbnails) -> Hero? {
+        let thumbnailPathWithExtension = heroNetworkData.thumbnail.thumbnailPath + "." + heroNetworkData.thumbnail.thumbnailExtension
+        guard let url = URL(string: thumbnailPathWithExtension),
+              let data = try? Data(contentsOf: url),
+              let heroAvatarImage = UIImage(data: data) else { return nil }
+        
+        let hero = Hero(id: heroNetworkData.id,
+                        name: heroNetworkData.name,
+                        description: heroNetworkData.description,
+                        image: heroAvatarImage)
+        return hero
     }
 }

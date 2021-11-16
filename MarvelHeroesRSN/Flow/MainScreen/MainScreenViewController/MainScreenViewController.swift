@@ -27,6 +27,7 @@ class MainScreenViewController: UIViewController, Alertable {
     private let limit: Int = 50
     private var offset: Int = 0
     private var isDataLoading: Bool = false
+    private var isCutOffUnsuccessfulHeroesCard = true
     
     //MARK: - Properties for RefreshController
     private var isRefreshingData: Bool = false
@@ -145,9 +146,10 @@ extension MainScreenViewController {
         networkService.loadHeroesData(limit: limit, offset: offset) { [weak self] result in
             switch result {
             case let .success(heroesWithThumbnails):
-                if let filteredHeroes = self?.heroesManager.getFilteredHeroesArray(fromHeroesWithThumbnails: heroesWithThumbnails, isRefreshingData: self?.isRefreshingData ?? true) {
+                if let heroesFromHeroesManager = self?.heroesManager.getHeroes(fromHeroesNetworkData: heroesWithThumbnails, isRefreshingData: self?.isRefreshingData ?? false, isCutOffUnsuccessfulHeroesCard: self?.isCutOffUnsuccessfulHeroesCard ?? true) {
+//                if let filteredHeroes = self?.heroesManager.getFilteredHeroesArray(fromHeroesWithThumbnails: heroesWithThumbnails, isRefreshingData: self?.isRefreshingData ?? true) {
                     DispatchQueue.main.async {
-                        self?.heroes = filteredHeroes
+                        self?.heroes = heroesFromHeroesManager
                         self?.mainScreenView.collectionView.reloadData()
                         self?.offset += self?.limit ?? 0
                     }

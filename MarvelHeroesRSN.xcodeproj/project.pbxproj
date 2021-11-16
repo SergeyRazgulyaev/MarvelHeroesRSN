@@ -142,6 +142,18 @@
 			path = HeroesManager;
 			sourceTree = "<group>";
 		};
+		C59A84652743B8B300B193FC /* Heroes */ = {
+			isa = PBXGroup;
+			children = (
+				C5AE63EE27158C15009BB463 /* GetHeroesResult.swift */,
+				C5AE63F027158C4A009BB463 /* HeroesData.swift */,
+				C5AE63F227158C8D009BB463 /* HeroWithThumbnails.swift */,
+				C5AE63F427158CB2009BB463 /* HeroThumbnail.swift */,
+				C5AE64182715F642009BB463 /* Hero.swift */,
+			);
+			path = Heroes;
+			sourceTree = "<group>";
+		};
 		C5AE63B627144984009BB463 = {
 			isa = PBXGroup;
 			children = (
@@ -282,11 +294,7 @@
 		C5AE63ED27158B16009BB463 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				C5AE63EE27158C15009BB463 /* GetHeroesResult.swift */,
-				C5AE63F027158C4A009BB463 /* HeroesData.swift */,
-				C5AE63F227158C8D009BB463 /* HeroWithThumbnails.swift */,
-				C5AE63F427158CB2009BB463 /* HeroThumbnail.swift */,
-				C5AE64182715F642009BB463 /* Hero.swift */,
+				C59A84652743B8B300B193FC /* Heroes */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
