@@ -7,11 +7,9 @@
 
 import Foundation
 
-protocol HeroesManagerProtocol {
-    var heroesStorage: [Hero] { get }
-    
+protocol HeroesManagerProtocol {    
     func getHero(byID id: Int) -> Hero?
-    func getHeroes(fromHeroesNetworkData heroesNetworkData: [HeroWithThumbnails],
+    func makeHeroesArray(fromHeroesNetworkData heroesNetworkData: [HeroWithThumbnails],
                    isRefreshingData: Bool,
                    isCutOffUnsuccessfulHeroesCard: Bool) -> [Hero]
     

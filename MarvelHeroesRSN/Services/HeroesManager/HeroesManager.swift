@@ -8,16 +8,16 @@
 import UIKit
 
 class HeroesManager: HeroesManagerProtocol {
-    private(set) var heroesStorage: [Hero] = []
+    private var heroesStorage: [Hero] = []
     
     func getHero(byID id: Int) -> Hero? {
         guard let hero = heroesStorage.filter({ $0.id == id }).first else { return nil }
         return hero
     }
     
-    func getHeroes(fromHeroesNetworkData heroesNetworkData: [HeroWithThumbnails],
-                   isRefreshingData: Bool,
-                   isCutOffUnsuccessfulHeroesCard: Bool) -> [Hero] {
+    func makeHeroesArray(fromHeroesNetworkData heroesNetworkData: [HeroWithThumbnails],
+                         isRefreshingData: Bool,
+                         isCutOffUnsuccessfulHeroesCard: Bool) -> [Hero] {
         var tempArray: [Hero] = []
         if isRefreshingData {
             heroesStorage = []
