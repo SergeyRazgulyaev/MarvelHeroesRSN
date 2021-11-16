@@ -10,6 +10,11 @@ import UIKit
 class HeroesManager: HeroesManagerProtocol {
     private var heroes: [Hero] = []
     
+    func getHero(byID id: Int) -> Hero? {
+        guard let hero = heroes.filter({ $0.id == id }).first else { return nil }
+        return hero
+    }
+    
     func getHeroes(fromHeroesNetworkData heroesNetworkData: [HeroWithThumbnails],
                    isRefreshingData: Bool,
                    isCutOffUnsuccessfulHeroesCard: Bool) -> [Hero] {

@@ -10,43 +10,68 @@ import XCTest
 
 class HeroesManagerTests: XCTestCase {
     var sut: HeroesManagerProtocol?
-    var heroWithThumbnails: HeroWithThumbnails?
+    var heroWithGoodThumbnails: HeroWithThumbnails?
+    var heroWithBadPathThumbnails: HeroWithThumbnails?
+    var heroWithBadExtensionThumbnails: HeroWithThumbnails?
     var heroesWithThumbnailsTestArray: [HeroWithThumbnails]?
     var heroesTestArray: [Hero]?
     
     override func setUp() {
         sut = HeroesManager()
-        heroWithThumbnails = HeroWithThumbnails(id: 1009144,
-                                                name: "A.I.M.",
-                                                description: "AIM is a terrorist organization bent on destroying the world.",
-                                                thumbnail: HeroThumbnail(thumbnailPath: "http://i.annihil.us/u/prod/marvel/i/mg/6/20/52602f21f29ec",
-                                                                         thumbnailExtension: "jpg"))
+        heroWithGoodThumbnails = HeroWithThumbnails(id: 1,
+                                                    name: "testName1",
+                                                    description: "testDescription1",
+                                                    thumbnail: HeroThumbnail(thumbnailPath: "http://i.annihil.us/u/prod/marvel/i/mg/6/20/52602f21f29ec",
+                                                                             thumbnailExtension: "jpg"))
+        heroWithBadPathThumbnails = HeroWithThumbnails(id: 2,
+                                                       name: "testName2",
+                                                       description: "testDescription2",
+                                                       thumbnail: HeroThumbnail(thumbnailPath: "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available",
+                                                                                thumbnailExtension: "jpg"))
+        heroWithBadExtensionThumbnails = HeroWithThumbnails(id: 3,
+                                                            name: "testName3",
+                                                            description: "testDescription3",
+                                                            thumbnail: HeroThumbnail(thumbnailPath: "http://i.annihil.us/u/prod/marvel/i/mg/5/e0/4c0035c9c425d",
+                                                                                     thumbnailExtension: "gif"))
         heroesWithThumbnailsTestArray = []
+        heroesWithThumbnailsTestArray?.append(heroWithGoodThumbnails!)
+        heroesWithThumbnailsTestArray?.append(heroWithBadPathThumbnails!)
+        heroesWithThumbnailsTestArray?.append(heroWithBadExtensionThumbnails!)
         heroesTestArray = []
     }
     
     override func tearDown() {
         sut = nil
-        heroWithThumbnails = nil
+        heroWithGoodThumbnails = nil
+        heroWithBadPathThumbnails = nil
+        heroWithBadExtensionThumbnails = nil
         heroesWithThumbnailsTestArray = nil
         heroesTestArray = nil
     }
     
-    func testHeroesWithThumbnailsTestArrayCount() throws {
-        heroesWithThumbnailsTestArray?.append(heroWithThumbnails!)
-        XCTAssertEqual(heroesWithThumbnailsTestArray?.count, 1)
-    }
-    
     func testGetFilteredHeroesArrayCount() throws {
-        heroesWithThumbnailsTestArray?.append(heroWithThumbnails!)
         heroesTestArray = sut?.getHeroes(fromHeroesNetworkData: heroesWithThumbnailsTestArray ?? [],
                                          isRefreshingData: false,
                                          isCutOffUnsuccessfulHeroesCard: true)
+        
         XCTAssertEqual(heroesTestArray?.count, 1)
     }
     
-    func testHeroByIDFromHeroesManager() throws {
-        
+    func testGetAllHeroesArrayCount() throws {
+        heroesTestArray = sut?.getHeroes(fromHeroesNetworkData: heroesWithThumbnailsTestArray ?? [],
+                                         isRefreshingData: false,
+                                         isCutOffUnsuccessfulHeroesCard: false)
+        XCTAssertEqual(heroesTestArray?.count, 3)
+    }
+    
+    func testGetHeroByIDFromHeroesManager() throws {
+        heroesTestArray = sut?.getHeroes(fromHeroesNetworkData: heroesWithThumbnailsTestArray ?? [],
+                                         isRefreshingData: false,
+                                         isCutOffUnsuccessfulHeroesCard: true)
+        let hero = sut?.getHero(byID: 1)
+        XCTAssertEqual(hero?.id, 1)
+        XCTAssertEqual(hero?.name, "testName1")
+        XCTAssertEqual(hero?.description, "testDescription1")
     }
     
 }

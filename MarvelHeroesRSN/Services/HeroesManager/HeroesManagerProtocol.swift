@@ -7,9 +7,8 @@
 
 import Foundation
 
-protocol HeroesManagerProtocol {    
-//    func getFilteredHeroesArray(fromHeroesWithThumbnails heroesWithThumbnails: [HeroWithThumbnails], isRefreshingData: Bool) -> [Hero]
-    
+protocol HeroesManagerProtocol {
+    func getHero(byID id: Int) -> Hero?
     func getHeroes(fromHeroesNetworkData heroesNetworkData: [HeroWithThumbnails],
                    isRefreshingData: Bool,
                    isCutOffUnsuccessfulHeroesCard: Bool) -> [Hero]
