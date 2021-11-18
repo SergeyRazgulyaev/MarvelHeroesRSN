@@ -9,7 +9,7 @@ import UIKit
 
 class MainScreenViewController: UIViewController, Alertable {
     //MARK: - UI properties
-    private lazy var mainScreenView: MainScreenView = {
+    private(set) lazy var mainScreenView: MainScreenView = {
         return MainScreenView()
     }()
     private lazy var cellWidthAndHeight: CGFloat = { mainScreenView.bounds.width / 3.0 }()
@@ -18,9 +18,11 @@ class MainScreenViewController: UIViewController, Alertable {
     
     //MARK: - Properties
     private let cellIdentifier: String = "MainScreenCollectionViewCell"
-    private let cellNumberFromEnd: Int = 4
     private var heroesManager = HeroesManager()
     private var heroes: [Hero] = []
+    
+    //MARK: - Properties for CollectionView
+    private(set) lazy var dataProvider = MainScreenDataProvider(cellIdentifier: cellIdentifier)
     
     //MARK: - Properties for Interaction with Network
     private let networkService: NetworkServiceProtocol
@@ -75,34 +77,34 @@ class MainScreenViewController: UIViewController, Alertable {
     
     //MARK: - Configuration Methods
     func configureViewController() {
-        mainScreenView.collectionView.delegate = self
-        mainScreenView.collectionView.dataSource = self
-        mainScreenView.collectionView.prefetchDataSource = self
+        mainScreenView.collectionView.delegate = dataProvider
+        mainScreenView.collectionView.dataSource = dataProvider
+        mainScreenView.collectionView.prefetchDataSource = dataProvider
         mainScreenView.collectionView.register(MainScreenCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
         mainScreenView.collectionView.refreshControl = refreshControl
     }
 }
 
-//MARK: - UICollectionViewDataSource
-extension MainScreenViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return heroes.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? MainScreenCollectionViewCell else { return UICollectionViewCell() }
-        cell.configureCellWithParametersFromNetwork(heroAvatarImage: heroes[indexPath.row].image, heroName: heroes[indexPath.row].name)
-        return cell
-    }
-}
-
-//MARK: - UICollectionViewDelegate
-extension MainScreenViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let heroScreenViewController = HeroScreenViewController(hero: heroes[indexPath.row])
-        navigationController?.pushViewController(heroScreenViewController, animated: true)
-    }
-}
+////MARK: - UICollectionViewDataSource
+//extension MainScreenViewController: UICollectionViewDataSource {
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return heroes.count
+//    }
+//    
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? MainScreenCollectionViewCell else { return UICollectionViewCell() }
+//        cell.configureCellWithParametersFromNetwork(heroAvatarImage: heroes[indexPath.row].image, heroName: heroes[indexPath.row].name)
+//        return cell
+//    }
+//}
+//
+////MARK: - UICollectionViewDelegate
+//extension MainScreenViewController: UICollectionViewDelegate {
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let heroScreenViewController = HeroScreenViewController(hero: heroes[indexPath.row])
+//        navigationController?.pushViewController(heroScreenViewController, animated: true)
+//    }
+//}
 
 //MARK: - UICollectionViewDelegateFlowLayout
 extension MainScreenViewController: UICollectionViewDelegateFlowLayout {
@@ -112,18 +114,18 @@ extension MainScreenViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-//MARK: - UICollectionViewDataSourcePrefetching
-extension MainScreenViewController: UICollectionViewDataSourcePrefetching {
-    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        guard indexPaths.contains(where: isLoadingCell(for:)),
-              !isDataLoading else { return }
-        loadHeroesDataFromNetWork()
-    }
-    
-    func isLoadingCell(for indexPath: IndexPath) -> Bool {
-        return indexPath.row == (heroes.count - cellNumberFromEnd)
-    }
-}
+////MARK: - UICollectionViewDataSourcePrefetching
+//extension MainScreenViewController: UICollectionViewDataSourcePrefetching {
+//    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+//        guard indexPaths.contains(where: isLoadingCell(for:)),
+//              !isDataLoading else { return }
+//        loadHeroesDataFromNetWork()
+//    }
+//
+//    func isLoadingCell(for indexPath: IndexPath) -> Bool {
+//        return indexPath.row == (heroes.count - cellNumberFromEnd)
+//    }
+//}
 
 //MARK: - Interaction with Network
 extension MainScreenViewController {

@@ -17,7 +17,7 @@ class HeroesManagerTests: XCTestCase {
     var heroesWithThumbnailsTestArray: [HeroWithThumbnails]?
     var heroesTestArray: [Hero]?
     
-    override func setUp() {
+    override func setUpWithError() throws {
         sut = HeroesManager()
         heroWithGoodThumbnails = HeroWithThumbnails(id: 1,
                                                     name: "testName1",
@@ -46,7 +46,7 @@ class HeroesManagerTests: XCTestCase {
         heroesTestArray = []
     }
     
-    override func tearDown() {
+    override func tearDownWithError() throws {
         sut = nil
         heroWithGoodThumbnails = nil
         heroWithBadPathThumbnails = nil
