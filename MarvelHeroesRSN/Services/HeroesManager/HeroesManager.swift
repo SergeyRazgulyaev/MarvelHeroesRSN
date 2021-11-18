@@ -8,19 +8,29 @@
 import UIKit
 
 class HeroesManager: HeroesManagerProtocol {
+    //MARK: - Properties
     private var heroesStorage: [Hero] = []
+    
+    //MARK: - Methods
+    func clearHeroesStorage() {
+        heroesStorage = []
+    }
     
     func getHero(byID id: Int) -> Hero? {
         guard let hero = heroesStorage.filter({ $0.id == id }).first else { return nil }
         return hero
     }
     
-    func makeHeroesArray(fromHeroesNetworkData heroesNetworkData: [HeroWithThumbnails],
-                         isRefreshingData: Bool,
-                         isCutOffUnsuccessfulHeroesCard: Bool) -> [Hero] {
+    func getAllHeroesFromStorage() -> [Hero] {
+        return heroesStorage
+    }
+    
+    func fillHeroesStorage(withDataFromNetwork heroesNetworkData: [HeroWithThumbnails],
+                           isRefreshingData: Bool,
+                           isCutOffUnsuccessfulHeroesCard: Bool) {
         var tempArray: [Hero] = []
         if isRefreshingData {
-            heroesStorage = []
+            clearHeroesStorage()
         }
         if isCutOffUnsuccessfulHeroesCard {
             for heroNetworkData in heroesNetworkData {
@@ -38,8 +48,6 @@ class HeroesManager: HeroesManagerProtocol {
             }
         }
         heroesStorage += tempArray
-        return heroesStorage
-        
     }
     
     private func makeHero(fromHeroNetworkData heroNetworkData: HeroWithThumbnails) -> Hero? {

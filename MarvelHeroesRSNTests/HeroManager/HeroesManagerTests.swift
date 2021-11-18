@@ -57,24 +57,26 @@ class HeroesManagerTests: XCTestCase {
     }
     
     func testGetFilteredHeroesArrayCount() throws {
-        heroesTestArray = sut?.makeHeroesArray(fromHeroesNetworkData: heroesWithThumbnailsTestArray ?? [],
+        sut?.fillHeroesStorage(withDataFromNetwork: heroesWithThumbnailsTestArray ?? [],
                                          isRefreshingData: false,
                                          isCutOffUnsuccessfulHeroesCard: true)
-        
+        heroesTestArray = sut?.getAllHeroesFromStorage()
         XCTAssertEqual(heroesTestArray?.count, 1)
     }
     
     func testGetAllHeroesArrayCount() throws {
-        heroesTestArray = sut?.makeHeroesArray(fromHeroesNetworkData: heroesWithThumbnailsTestArray ?? [],
+        sut?.fillHeroesStorage(withDataFromNetwork: heroesWithThumbnailsTestArray ?? [],
                                          isRefreshingData: false,
                                          isCutOffUnsuccessfulHeroesCard: false)
+        heroesTestArray = sut?.getAllHeroesFromStorage()
         XCTAssertEqual(heroesTestArray?.count, 3)
     }
     
     func testGetHeroByIDFromHeroesManager() {
-        heroesTestArray = sut?.makeHeroesArray(fromHeroesNetworkData: heroesWithThumbnailsTestArray ?? [],
+        sut?.fillHeroesStorage(withDataFromNetwork: heroesWithThumbnailsTestArray ?? [],
                                          isRefreshingData: false,
                                          isCutOffUnsuccessfulHeroesCard: false)
+        heroesTestArray = sut?.getAllHeroesFromStorage()
         let hero = sut?.getHero(byID: 2)
         XCTAssertEqual(hero?.id, 2)
         XCTAssertEqual(hero?.name, "testName2")
@@ -83,9 +85,10 @@ class HeroesManagerTests: XCTestCase {
     
     func testGenNilHeroByIDFromHeroesManager() {
         heroesWithThumbnailsTestArray = []
-        heroesTestArray = sut?.makeHeroesArray(fromHeroesNetworkData: heroesWithThumbnailsTestArray ?? [],
+        sut?.fillHeroesStorage(withDataFromNetwork: heroesWithThumbnailsTestArray ?? [],
                                          isRefreshingData: false,
                                          isCutOffUnsuccessfulHeroesCard: false)
+        heroesTestArray = sut?.getAllHeroesFromStorage()
         let hero = sut?.getHero(byID: 1)
         XCTAssertEqual(hero, nil)
     }
@@ -93,28 +96,32 @@ class HeroesManagerTests: XCTestCase {
     func testIsHeroesArrayEmptyWhenRefresh() {
         heroesWithThumbnailsTestArray = []
         heroesWithThumbnailsTestArray?.append(heroWithGoodThumbnails!)
-        heroesTestArray = sut?.makeHeroesArray(fromHeroesNetworkData: heroesWithThumbnailsTestArray ?? [],
+        sut?.fillHeroesStorage(withDataFromNetwork: heroesWithThumbnailsTestArray ?? [],
                                          isRefreshingData: false,
                                          isCutOffUnsuccessfulHeroesCard: false)
+        heroesTestArray = sut?.getAllHeroesFromStorage()
         XCTAssertEqual(heroesTestArray?.count, 1)
         
-        heroesTestArray = sut?.makeHeroesArray(fromHeroesNetworkData: heroesWithThumbnailsTestArray ?? [],
+        sut?.fillHeroesStorage(withDataFromNetwork: heroesWithThumbnailsTestArray ?? [],
                                          isRefreshingData: false,
                                          isCutOffUnsuccessfulHeroesCard: false)
+        heroesTestArray = sut?.getAllHeroesFromStorage()
         XCTAssertEqual(heroesTestArray?.count, 2)
         
-        heroesTestArray = sut?.makeHeroesArray(fromHeroesNetworkData: heroesWithThumbnailsTestArray ?? [],
+        sut?.fillHeroesStorage(withDataFromNetwork: heroesWithThumbnailsTestArray ?? [],
                                          isRefreshingData: true,
                                          isCutOffUnsuccessfulHeroesCard: false)
+        heroesTestArray = sut?.getAllHeroesFromStorage()
         XCTAssertEqual(heroesTestArray?.count, 1)
     }
     
-    func testNilImageWhenMakeHero() {
+    func testNilHeroWhenMakeHeroWithCrashedThumbnails() {
         heroesWithThumbnailsTestArray = []
         heroesWithThumbnailsTestArray?.append(heroWithCrashedExtensionThumbnails!)
-        heroesTestArray = sut?.makeHeroesArray(fromHeroesNetworkData: heroesWithThumbnailsTestArray ?? [],
+        sut?.fillHeroesStorage(withDataFromNetwork: heroesWithThumbnailsTestArray ?? [],
                                          isRefreshingData: false,
                                          isCutOffUnsuccessfulHeroesCard: false)
+        heroesTestArray = sut?.getAllHeroesFromStorage()
         let hero = sut?.getHero(byID: 4)
         XCTAssertEqual(hero, nil)
     }
