@@ -34,6 +34,6 @@ class MainScreenDataProviderTests: XCTestCase {
     }
     
     func testNumberOfSectionsIsOne() {
-        
+        XCTAssertEqual(collectionView?.numberOfSections, 1)
     }
 }
