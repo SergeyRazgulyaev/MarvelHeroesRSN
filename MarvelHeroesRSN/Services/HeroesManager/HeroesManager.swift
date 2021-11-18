@@ -21,6 +21,11 @@ class HeroesManager: HeroesManagerProtocol {
         return hero
     }
     
+    func getHero(byName name: String) -> Hero? {
+        guard let hero = heroesStorage.filter({ $0.name == name }).first else { return nil }
+        return hero
+    }
+    
     func getAllHeroesFromStorage() -> [Hero] {
         return heroesStorage
     }
