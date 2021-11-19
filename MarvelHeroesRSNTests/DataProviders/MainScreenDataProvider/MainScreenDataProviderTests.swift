@@ -44,7 +44,7 @@ class MainScreenDataProviderTests: XCTestCase {
             let layout = UICollectionViewFlowLayout()
             layout.scrollDirection = .vertical
             layout.minimumLineSpacing = itemsIndentation
-            layout.minimumInteritemSpacing = itemsIndentation / 2
+            layout.minimumInteritemSpacing = itemsIndentation
             let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
             collectionView.backgroundColor = .black
             collectionView.translatesAutoresizingMaskIntoConstraints = false

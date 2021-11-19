@@ -30,7 +30,6 @@ class MainScreenView: UIView {
         label.textColor = .white
         label.textAlignment = .center
         label.backgroundColor = .systemRed
-        
         label.layer.cornerRadius = 12.0
         label.layer.masksToBounds = true
         label.translatesAutoresizingMaskIntoConstraints = false
