@@ -11,13 +11,12 @@ class MainScreenDataProvider: NSObject {
     //MARK: - Properties
     private let cellIdentifier: String
     private let edgeIndentation: CGFloat = 10.0
-    private let indentationBetweenCells: CGFloat = 7.0
+    private let indentationBetweenCells: CGFloat = 4.0
     private let numberOfCellsInCollectionViewRow: Int = 3
     private let cellNumberFromEnd: Int = 4
     private var imageInCellWidthAndHeight: CGFloat {
-//        100
         guard let owningViewController = owningViewController else { return 100 }
-        return ((owningViewController.mainScreenView.bounds.width - (2 * edgeIndentation)) / CGFloat(numberOfCellsInCollectionViewRow) - indentationBetweenCells)
+        return ((owningViewController.mainScreenView.bounds.width - (2 * edgeIndentation)) / CGFloat(numberOfCellsInCollectionViewRow) - indentationBetweenCells * CGFloat(numberOfCellsInCollectionViewRow - 1))
     }
     private lazy var collectionViewItemWidth: CGFloat = {
         imageInCellWidthAndHeight
