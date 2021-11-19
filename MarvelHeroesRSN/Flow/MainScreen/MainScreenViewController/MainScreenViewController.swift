@@ -12,23 +12,19 @@ class MainScreenViewController: UIViewController, Alertable {
     private(set) lazy var mainScreenView: MainScreenView = {
         return MainScreenView()
     }()
-    private lazy var cellWidthAndHeight: CGFloat = { mainScreenView.bounds.width / 3.0 }()
-    private let indentationBetweenCells: CGFloat = 0.5
-    private let numberOfCellsInCollectionView: Int = 3
     
     //MARK: - Properties
     private let cellIdentifier: String = "MainScreenCollectionViewCell"
-    private var heroesManager = HeroesManager()
-    private var heroes: [Hero] = []
     
-    //MARK: - Properties for CollectionView
-    private(set) lazy var dataProvider = MainScreenDataProvider(cellIdentifier: cellIdentifier)
+    //MARK: - Properties for interaction with CollectionView
+    private(set) lazy var dataProvider = MainScreenDataProvider(owningViewController: self,
+                                                                cellIdentifier: cellIdentifier)
     
-    //MARK: - Properties for Interaction with Network
+    //MARK: - Properties for interaction with Network
     private let networkService: NetworkServiceProtocol
     private let limit: Int = 50
     private var offset: Int = 0
-    private var isDataLoading: Bool = false
+    private(set) var isDataLoading: Bool = false
     private var isCutOffUnsuccessfulHeroesCard = true
     
     //MARK: - Properties for RefreshController
@@ -80,57 +76,16 @@ class MainScreenViewController: UIViewController, Alertable {
         mainScreenView.collectionView.delegate = dataProvider
         mainScreenView.collectionView.dataSource = dataProvider
         mainScreenView.collectionView.prefetchDataSource = dataProvider
-        mainScreenView.collectionView.register(MainScreenCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
+        mainScreenView.collectionView.register(MainScreenCollectionViewCell.self,
+                                               forCellWithReuseIdentifier: cellIdentifier)
         mainScreenView.collectionView.refreshControl = refreshControl
     }
 }
 
-////MARK: - UICollectionViewDataSource
-//extension MainScreenViewController: UICollectionViewDataSource {
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return heroes.count
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? MainScreenCollectionViewCell else { return UICollectionViewCell() }
-//        cell.configureCellWithParametersFromNetwork(heroAvatarImage: heroes[indexPath.row].image, heroName: heroes[indexPath.row].name)
-//        return cell
-//    }
-//}
-//
-////MARK: - UICollectionViewDelegate
-//extension MainScreenViewController: UICollectionViewDelegate {
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let heroScreenViewController = HeroScreenViewController(hero: heroes[indexPath.row])
-//        navigationController?.pushViewController(heroScreenViewController, animated: true)
-//    }
-//}
-
-//MARK: - UICollectionViewDelegateFlowLayout
-extension MainScreenViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: cellWidthAndHeight - indentationBetweenCells * CGFloat(numberOfCellsInCollectionView) * mainScreenView.getItemsIndentation(),
-                      height: cellWidthAndHeight - indentationBetweenCells * CGFloat(numberOfCellsInCollectionView) * mainScreenView.getItemsIndentation() + mainScreenView.getHeroNameLabelHeight())
-    }
-}
-
-////MARK: - UICollectionViewDataSourcePrefetching
-//extension MainScreenViewController: UICollectionViewDataSourcePrefetching {
-//    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-//        guard indexPaths.contains(where: isLoadingCell(for:)),
-//              !isDataLoading else { return }
-//        loadHeroesDataFromNetWork()
-//    }
-//
-//    func isLoadingCell(for indexPath: IndexPath) -> Bool {
-//        return indexPath.row == (heroes.count - cellNumberFromEnd)
-//    }
-//}
-
 //MARK: - Interaction with Network
 extension MainScreenViewController {
     func loadHeroesDataFromNetWorkIfNeeded() {
-        if heroes.isEmpty {
+        if dataProvider.heroesManager.getAllHeroesFromStorage().isEmpty {
             loadHeroesDataFromNetWork()
         }
     }
@@ -148,10 +103,12 @@ extension MainScreenViewController {
         networkService.loadHeroesData(limit: limit, offset: offset) { [weak self] result in
             switch result {
             case let .success(heroesWithThumbnails):
-                self?.heroesManager.fillHeroesStorage(withDataFromNetwork: heroesWithThumbnails, isRefreshingData: self?.isRefreshingData ?? false, isCutOffUnsuccessfulHeroesCard: self?.isCutOffUnsuccessfulHeroesCard ?? false)
-                if let heroesFromHeroesManager = self?.heroesManager.getAllHeroesFromStorage() {
+                self?.dataProvider.heroesManager.fillHeroesStorage(withDataFromNetwork: heroesWithThumbnails,
+                                                     isRefreshingData: self?.isRefreshingData ?? false,
+                                                     isCutOffUnsuccessfulHeroesCard: self?.isCutOffUnsuccessfulHeroesCard ?? false)
+                if let heroesFromHeroesManager = self?.dataProvider.heroesManager.getAllHeroesFromStorage() {
                     DispatchQueue.main.async {
-                        self?.heroes = heroesFromHeroesManager
+                        self?.dataProvider.fillHeroes(fromArray: heroesFromHeroesManager)
                         self?.mainScreenView.collectionView.reloadData()
                         self?.offset += self?.limit ?? 0
                     }

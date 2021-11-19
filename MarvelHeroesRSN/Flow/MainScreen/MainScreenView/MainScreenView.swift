@@ -73,6 +73,7 @@ class MainScreenView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
+        configureViewForTesting()
         configureSubviews()
         configureConstraints()
     }
@@ -84,6 +85,10 @@ class MainScreenView: UIView {
     //MARK: - Configuration methods
     func configureUI() {
         backgroundColor = .black
+    }
+    
+    func configureViewForTesting() {
+        accessibilityIdentifier = "mainScreenView"
     }
     
     func configureSubviews() {

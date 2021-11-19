@@ -26,13 +26,15 @@ class MainScreenViewControllerTests: XCTestCase {
                                                         hash: urlHash,
                                                         limit: limit,
                                                         offset: offset)
-    lazy var networkService: NetworkService? = NetworkService(urlParametersContainer: urlParametersContainer)
-    lazy var sut: MainScreenViewController? = MainScreenViewController(networkService: networkService!)
+    var networkService: NetworkService?
+    var sut: MainScreenViewController?
     
     override func setUpWithError() throws {
+        networkService = NetworkService(urlParametersContainer: urlParametersContainer)
+        sut = MainScreenViewController(networkService: networkService!)
         networkService?.delegate = sut
     }
-
+    
     override func tearDownWithError() throws {
         networkService = nil
         sut = nil
@@ -87,9 +89,4 @@ class MainScreenViewControllerTests: XCTestCase {
     func testLoadHeroesDataFromNetWorkMethodIsWorking() {
         sut?.loadHeroesDataFromNetWorkIfNeeded()
     }
-    
-//    func testWhenRefreshingDataLoadHeroesDataFromNetWorkMethodIsWorking() {
-//        sut?.loadViewIfNeeded()
-//        sut?.refreshControl.
-//    }
 }
