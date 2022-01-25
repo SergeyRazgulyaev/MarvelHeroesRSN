@@ -64,12 +64,39 @@ class MainScreenDataProviderTests: XCTestCase {
         XCTAssertEqual(collectionView?.numberOfSections, 1)
     }
     
-    func testNumberOfItemsInSection() {
+	func testNumberOfItemsInSectionAtStartIsZero() {
+		XCTAssertEqual(collectionView?.numberOfItems(inSection: 0), 0)
+	}
+
+//	func testCellForRowAtIndexPathDequeuesCellFromCollectionView() {
+//		let mockCollectionView = MockCollectionView()
+//		mockCollectionView.dataSource = sut
+//		mockCollectionView.register(MainScreenCollectionViewCell.self,
+//									forCellWithReuseIdentifier: String(describing: MainScreenCollectionViewCell.self))
+//	}
+
+//	func testNumberOfItemsInSectionAtStartIsZero() {
+//        sut?.owningViewController?.loadHeroesDataFromNetWorkIfNeeded()
+//		XCTAssertEqual(collectionView?.numberOfItems(inSection: 0), 0)
+//        collectionView?.reloadData()
+//        XCTAssertEqual(collectionView?.numberOfItems(inSection: 0), 0)
+
 //        let app = XCUIApplication()
 //        app.launch()
 //        sut?.owningViewController?.loadHeroesDataFromNetWorkIfNeeded()
 //        let mainScreenView = app.otherElements["mainScreenView"].firstMatch
 //        XCTAssertTrue(mainScreenView.waitForExistence(timeout: 20))
-//        XCTAssertEqual(collectionView?.numberOfItems(inSection: 0), 23)        
-    }
+//        XCTAssertEqual(collectionView?.numberOfItems(inSection: 0), 23)
+//	}
+}
+
+extension MainScreenDataProviderTests {
+	class MockCollectionView: UICollectionView {
+		var cellIsDequeued = false
+
+		override func dequeueReusableCell(withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionViewCell {
+			cellIsDequeued = true
+			return super.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
+		}
+	}
 }

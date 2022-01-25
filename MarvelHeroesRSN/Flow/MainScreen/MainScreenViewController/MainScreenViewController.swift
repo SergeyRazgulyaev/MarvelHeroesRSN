@@ -17,8 +17,10 @@ class MainScreenViewController: UIViewController, Alertable {
     private let cellIdentifier: String = "MainScreenCollectionViewCell"
     
     //MARK: - Properties for interaction with CollectionView
-    private(set) lazy var dataProvider = MainScreenDataProvider(owningViewController: self,
-                                                                cellIdentifier: cellIdentifier)
+    private(set) lazy var dataProvider = MainScreenDataProvider(
+		owningViewController: self,
+		cellIdentifier: cellIdentifier
+	)
     
     //MARK: - Properties for interaction with Network
     private let networkService: NetworkServiceProtocol
@@ -36,19 +38,19 @@ class MainScreenViewController: UIViewController, Alertable {
         return refreshControl
     }()
     
-    @objc private func reloadHeroesData(_ sender: UIRefreshControl) {
-        if !isDataLoading {
-            self.refreshControl.beginRefreshing()
-            isRefreshingData = true
-            loadHeroesDataFromNetWork() { [weak self] in
-                DispatchQueue.main.async {
-                    self?.refreshControl.endRefreshing()
-                }
-            }
-        } else {
-            self.refreshControl.endRefreshing()
-        }
-    }
+	@objc private func reloadHeroesData(_ sender: UIRefreshControl) {
+		if !isDataLoading {
+			self.refreshControl.endRefreshing()
+		} else {
+			self.refreshControl.beginRefreshing()
+			isRefreshingData = true
+			loadHeroesDataFromNetWork() { [weak self] in
+				DispatchQueue.main.async {
+					self?.refreshControl.endRefreshing()
+				}
+			}
+		}
+	}
     
     //MARK: - Init
     init(networkService: NetworkServiceProtocol) {
