@@ -19,6 +19,12 @@ class MainScreenDataProviderTests: XCTestCase {
     let offset = 0
     
     let itemsIndentation: CGFloat = 10.0
+
+	let testHeroe = Hero(id: 123,
+						 name: "TestHeroName",
+						 description: "TestHeroDescription",
+						 image: UIImage(systemName: "tortoise.fill")!)
+	lazy var testHeroes: [Hero] = [testHeroe]
     
     var sut: MainScreenDataProvider?
     var collectionView: UICollectionView?
@@ -38,8 +44,7 @@ class MainScreenDataProviderTests: XCTestCase {
         networkService = NetworkService(urlParametersContainer: urlParametersContainer)
         mainScreenViewController = MainScreenViewController(networkService: networkService!)
         networkService?.delegate = mainScreenViewController
-        sut = MainScreenDataProvider(owningViewController: mainScreenViewController!,
-                                     cellIdentifier: "MainScreenCollectionViewCell")
+        sut = MainScreenDataProvider(owningViewController: mainScreenViewController!)
         collectionView = {
             let layout = UICollectionViewFlowLayout()
             layout.scrollDirection = .vertical
@@ -67,36 +72,30 @@ class MainScreenDataProviderTests: XCTestCase {
 	func testNumberOfItemsInSectionAtStartIsZero() {
 		XCTAssertEqual(collectionView?.numberOfItems(inSection: 0), 0)
 	}
-
-//	func testCellForRowAtIndexPathDequeuesCellFromCollectionView() {
-//		let mockCollectionView = MockCollectionView()
-//		mockCollectionView.dataSource = sut
-//		mockCollectionView.register(MainScreenCollectionViewCell.self,
-//									forCellWithReuseIdentifier: String(describing: MainScreenCollectionViewCell.self))
-//	}
-
-//	func testNumberOfItemsInSectionAtStartIsZero() {
-//        sut?.owningViewController?.loadHeroesDataFromNetWorkIfNeeded()
-//		XCTAssertEqual(collectionView?.numberOfItems(inSection: 0), 0)
-//        collectionView?.reloadData()
-//        XCTAssertEqual(collectionView?.numberOfItems(inSection: 0), 0)
-
-//        let app = XCUIApplication()
-//        app.launch()
-//        sut?.owningViewController?.loadHeroesDataFromNetWorkIfNeeded()
-//        let mainScreenView = app.otherElements["mainScreenView"].firstMatch
-//        XCTAssertTrue(mainScreenView.waitForExistence(timeout: 20))
-//        XCTAssertEqual(collectionView?.numberOfItems(inSection: 0), 23)
-//	}
 }
 
 extension MainScreenDataProviderTests {
 	class MockCollectionView: UICollectionView {
-		var cellIsDequeued = false
+		let itemsIndentation: CGFloat = 10.0
+		var isCellForItemAtZeroIndexPathActivated = false
 
-		override func dequeueReusableCell(withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionViewCell {
-			cellIsDequeued = true
-			return super.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
+		override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
+			let layout = UICollectionViewFlowLayout()
+			layout.scrollDirection = .vertical
+			layout.minimumLineSpacing = itemsIndentation
+			layout.minimumInteritemSpacing = itemsIndentation
+			super.init(frame: .zero, collectionViewLayout: layout)
+			backgroundColor = .black
+			translatesAutoresizingMaskIntoConstraints = false
+		}
+
+		required init?(coder: NSCoder) {
+			fatalError("init(coder:) has not been implemented")
+		}
+
+		override func cellForItem(at indexPath: IndexPath) -> UICollectionViewCell? {
+			isCellForItemAtZeroIndexPathActivated = true
+			return super.cellForItem(at: indexPath)
 		}
 	}
 }
