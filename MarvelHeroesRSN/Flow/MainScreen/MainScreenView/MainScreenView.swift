@@ -9,8 +9,8 @@ import UIKit
 
 class MainScreenView: UIView {
     //MARK: - UI properties
+	static let heroNameLabelHeight: CGFloat = 25.0
     private let headerViewHeight: CGFloat = 90.0
-    private let heroNameLabelHeight: CGFloat = 25.0
     private let loadingDataStatusLabelHeight: CGFloat = 30.0
     private let loadingActivityIndicatorCenterOffset: CGFloat = 100.0
 
@@ -24,7 +24,7 @@ class MainScreenView: UIView {
 		imageInCellWidthAndHeight
 	}()
 	private(set) lazy var collectionViewItemHeight: CGFloat = {
-		return imageInCellWidthAndHeight + heroNameLabelHeight
+		return imageInCellWidthAndHeight + MainScreenView.heroNameLabelHeight
 	}()
     
     //MARK: - UI components

@@ -10,9 +10,7 @@ import UIKit
 class MainScreenCollectionViewCell: UICollectionViewCell {
     //MARK: - UI properties
 	static let cellIdentifier: String = String(describing: self)
-	
-    private let heroNameLabelHeight: CGFloat = 25.0
-    
+
     //MARK: - UI components
     private(set) lazy var heroAvatarImageView: UIImageView = {
         let imageView = UIImageView()
@@ -59,7 +57,7 @@ class MainScreenCollectionViewCell: UICollectionViewCell {
             heroAvatarImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             heroAvatarImageView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor),
             heroAvatarImageView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor),
-            heroAvatarImageView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -heroNameLabelHeight),
+			heroAvatarImageView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -MainScreenView.heroNameLabelHeight),
             
             heroNameLabel.topAnchor.constraint(equalTo: heroAvatarImageView.bottomAnchor),
             heroNameLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor),
