@@ -9,22 +9,20 @@ import UIKit
 
 class MainScreenView: UIView {
     //MARK: - UI properties
-    private let itemsIndentation: CGFloat = 10.0
     private let headerViewHeight: CGFloat = 90.0
     private let heroNameLabelHeight: CGFloat = 25.0
     private let loadingDataStatusLabelHeight: CGFloat = 30.0
     private let loadingActivityIndicatorCenterOffset: CGFloat = 100.0
-	private let numberOfCellsInCollectionViewRow: Int = 3
+
+	private let indentationBetweenCollectionViewItems: CGFloat = 10.0
 	private let indentationBetweenCells: CGFloat = 4.0
-
+	private let numberOfCellsInCollectionViewRow: Int = 3
 	private var imageInCellWidthAndHeight: CGFloat {
-		return (bounds.width - (2 * itemsIndentation)) / CGFloat(numberOfCellsInCollectionViewRow) - indentationBetweenCells * CGFloat(numberOfCellsInCollectionViewRow - 1)
+		return (bounds.width - (2 * indentationBetweenCollectionViewItems)) / CGFloat(numberOfCellsInCollectionViewRow) - indentationBetweenCells * CGFloat(numberOfCellsInCollectionViewRow - 1)
 	}
-
 	private(set) lazy var collectionViewItemWidth: CGFloat = {
 		imageInCellWidthAndHeight
 	}()
-
 	private(set) lazy var collectionViewItemHeight: CGFloat = {
 		return imageInCellWidthAndHeight + heroNameLabelHeight
 	}()
@@ -53,8 +51,8 @@ class MainScreenView: UIView {
     private(set) lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = itemsIndentation
-        layout.minimumInteritemSpacing = itemsIndentation
+        layout.minimumLineSpacing = indentationBetweenCollectionViewItems
+        layout.minimumInteritemSpacing = indentationBetweenCollectionViewItems
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .black
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -121,26 +119,26 @@ class MainScreenView: UIView {
             
             headerLabel.topAnchor.constraint(equalTo: headerView.topAnchor),
             headerLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor,
-                                                constant: -itemsIndentation),
+                                                constant: -indentationBetweenCollectionViewItems),
             headerLabel.rightAnchor.constraint(equalTo: headerView.rightAnchor,
-                                                constant: -itemsIndentation),
+                                                constant: -indentationBetweenCollectionViewItems),
             headerLabel.leftAnchor.constraint(equalTo: headerView.leftAnchor,
-                                               constant: itemsIndentation),
+                                               constant: indentationBetweenCollectionViewItems),
             
             collectionView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
             collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor,
-                                                   constant: -(loadingDataStatusLabelHeight + itemsIndentation)),
+                                                   constant: -(loadingDataStatusLabelHeight + indentationBetweenCollectionViewItems)),
             collectionView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor,
-                                                  constant: -itemsIndentation),
+                                                  constant: -indentationBetweenCollectionViewItems),
             collectionView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor,
-                                                 constant: itemsIndentation),
+                                                 constant: indentationBetweenCollectionViewItems),
             
             loadingDataStatusLabel.heightAnchor.constraint(equalToConstant: loadingDataStatusLabelHeight),
             loadingDataStatusLabel.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
             loadingDataStatusLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor,
-                                                          constant: -itemsIndentation),
+                                                          constant: -indentationBetweenCollectionViewItems),
             loadingDataStatusLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor,
-                                                         constant: itemsIndentation),
+                                                         constant: indentationBetweenCollectionViewItems),
             
             loadingActivityIndicator.centerXAnchor.constraint(equalTo: loadingDataStatusLabel.centerXAnchor, constant: -loadingActivityIndicatorCenterOffset),
             loadingActivityIndicator.centerYAnchor.constraint(equalTo: loadingDataStatusLabel.centerYAnchor)
