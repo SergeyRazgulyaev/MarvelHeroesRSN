@@ -9,31 +9,14 @@ import UIKit
 
 class MainScreenDataProvider: NSObject {
     //MARK: - Properties
-    private let cellIdentifier: String
-    private let edgeIndentation: CGFloat = 10.0
-    private let indentationBetweenCells: CGFloat = 4.0
-    private let numberOfCellsInCollectionViewRow: Int = 3
-    private let cellNumberFromEnd: Int = 4
-    private var imageInCellWidthAndHeight: CGFloat {
-        guard let owningViewController = owningViewController else { return 100 }
-        return ((owningViewController.mainScreenView.bounds.width - (2 * edgeIndentation)) / CGFloat(numberOfCellsInCollectionViewRow) - indentationBetweenCells * CGFloat(numberOfCellsInCollectionViewRow - 1))
-    }
-    private lazy var collectionViewItemWidth: CGFloat = {
-        imageInCellWidthAndHeight
-    }()
-    private lazy var collectionViewItemHeight: CGFloat = {
-        guard let owningViewController = owningViewController else { return 100 }
-        return imageInCellWidthAndHeight + (owningViewController.mainScreenView.getHeroNameLabelHeight())
-    }()
+    private let cellNumberFromEndForPrefetching: Int = 4
     private(set) var heroes: [Hero] = []
     private(set) var heroesManager = HeroesManager()
     private(set) weak var owningViewController: MainScreenViewController?
 
     //MARK: - Init
-    init(owningViewController: MainScreenViewController,
-         cellIdentifier: String) {
+    init(owningViewController: MainScreenViewController) {
         self.owningViewController = owningViewController
-        self.cellIdentifier = cellIdentifier
     }
     
     //MARK: - Methods
@@ -49,7 +32,7 @@ extension MainScreenDataProvider: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? MainScreenCollectionViewCell else { return UICollectionViewCell() }
+		guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainScreenCollectionViewCell.cellIdentifier, for: indexPath) as? MainScreenCollectionViewCell else { return UICollectionViewCell() }
         cell.configureCellWithParametersFromNetwork(heroAvatarImage: heroes[indexPath.row].image, heroName: heroes[indexPath.row].name)
         return cell
     }
@@ -65,10 +48,12 @@ extension MainScreenDataProvider: UICollectionViewDelegate {
 
 //MARK: - UICollectionViewDelegateFlowLayout
 extension MainScreenDataProvider: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionViewItemWidth,
-                      height: collectionViewItemHeight)
-    }
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+		return CGSize(width:
+						owningViewController?.mainScreenView.collectionViewItemWidth ?? 100,
+					  height:
+						owningViewController?.mainScreenView.collectionViewItemHeight ?? 100)
+	}
 }
 
 //MARK: - UICollectionViewDataSourcePrefetching
@@ -80,6 +65,6 @@ extension MainScreenDataProvider: UICollectionViewDataSourcePrefetching {
     }
     
     func isLoadingCell(for indexPath: IndexPath) -> Bool {
-        return indexPath.row == (heroes.count - cellNumberFromEnd)
+        return indexPath.row == (heroes.count - cellNumberFromEndForPrefetching)
     }
 }

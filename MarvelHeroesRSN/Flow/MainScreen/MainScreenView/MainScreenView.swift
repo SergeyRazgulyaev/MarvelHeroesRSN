@@ -14,6 +14,20 @@ class MainScreenView: UIView {
     private let heroNameLabelHeight: CGFloat = 25.0
     private let loadingDataStatusLabelHeight: CGFloat = 30.0
     private let loadingActivityIndicatorCenterOffset: CGFloat = 100.0
+	private let numberOfCellsInCollectionViewRow: Int = 3
+	private let indentationBetweenCells: CGFloat = 4.0
+
+	private var imageInCellWidthAndHeight: CGFloat {
+		return (bounds.width - (2 * itemsIndentation)) / CGFloat(numberOfCellsInCollectionViewRow) - indentationBetweenCells * CGFloat(numberOfCellsInCollectionViewRow - 1)
+	}
+
+	private(set) lazy var collectionViewItemWidth: CGFloat = {
+		imageInCellWidthAndHeight
+	}()
+
+	private(set) lazy var collectionViewItemHeight: CGFloat = {
+		return imageInCellWidthAndHeight + heroNameLabelHeight
+	}()
     
     //MARK: - UI components
     private(set) lazy var headerView: UIView = {
@@ -131,14 +145,5 @@ class MainScreenView: UIView {
             loadingActivityIndicator.centerXAnchor.constraint(equalTo: loadingDataStatusLabel.centerXAnchor, constant: -loadingActivityIndicatorCenterOffset),
             loadingActivityIndicator.centerYAnchor.constraint(equalTo: loadingDataStatusLabel.centerYAnchor)
         ])
-    }
-    
-    //MARK: - Get methods
-    func getItemsIndentation() -> CGFloat {
-        return itemsIndentation
-    }
-    
-    func getHeroNameLabelHeight() -> CGFloat {
-        return heroNameLabelHeight
     }
 }

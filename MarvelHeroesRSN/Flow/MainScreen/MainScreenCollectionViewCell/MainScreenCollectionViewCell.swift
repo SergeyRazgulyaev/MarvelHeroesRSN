@@ -9,6 +9,8 @@ import UIKit
 
 class MainScreenCollectionViewCell: UICollectionViewCell {
     //MARK: - UI properties
+	static let cellIdentifier: String = String(describing: self)
+	
     private let heroNameLabelHeight: CGFloat = 25.0
     
     //MARK: - UI components

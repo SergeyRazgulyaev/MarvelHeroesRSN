@@ -13,14 +13,9 @@ class MainScreenViewController: UIViewController, Alertable {
         return MainScreenView()
     }()
     
-    //MARK: - Properties
-    private let cellIdentifier: String = "MainScreenCollectionViewCell"
-    
     //MARK: - Properties for interaction with CollectionView
     private(set) lazy var dataProvider = MainScreenDataProvider(
-		owningViewController: self,
-		cellIdentifier: cellIdentifier
-	)
+		owningViewController: self)
     
     //MARK: - Properties for interaction with Network
     private let networkService: NetworkServiceProtocol
@@ -79,7 +74,7 @@ class MainScreenViewController: UIViewController, Alertable {
         mainScreenView.collectionView.dataSource = dataProvider
         mainScreenView.collectionView.prefetchDataSource = dataProvider
         mainScreenView.collectionView.register(MainScreenCollectionViewCell.self,
-                                               forCellWithReuseIdentifier: cellIdentifier)
+											   forCellWithReuseIdentifier: MainScreenCollectionViewCell.cellIdentifier)
         mainScreenView.collectionView.refreshControl = refreshControl
     }
 }
