@@ -14,11 +14,10 @@ class MainScreenViewController: UIViewController, Alertable {
     }()
     
     //MARK: - Properties for interaction with CollectionView
-    private(set) lazy var dataProvider = MainScreenDataProvider(
-		owningViewController: self)
+	private(set) var dataProvider: MainScreenDataProvider?
     
     //MARK: - Properties for interaction with Network
-    private let networkService: NetworkServiceProtocol
+    private var networkService: NetworkServiceProtocol?
     private let limit: Int = 50
     private var offset: Int = 0
     private(set) var isDataLoading: Bool = false
@@ -48,8 +47,10 @@ class MainScreenViewController: UIViewController, Alertable {
 	}
     
     //MARK: - Init
-    init(networkService: NetworkServiceProtocol) {
+	init(networkService: NetworkServiceProtocol,
+		 dataProvider: DataProviderProtocol) {
         self.networkService = networkService
+		self.dataProvider = dataProvider as? MainScreenDataProvider
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -82,7 +83,7 @@ class MainScreenViewController: UIViewController, Alertable {
 //MARK: - Interaction with Network
 extension MainScreenViewController {
     func loadHeroesDataFromNetWorkIfNeeded() {
-        if dataProvider.heroesManager.getAllHeroesFromStorage().isEmpty {
+		if dataProvider?.heroesManager.getAllHeroesFromStorage().count == 0 {
             loadHeroesDataFromNetWork()
         }
     }
@@ -97,24 +98,25 @@ extension MainScreenViewController {
             self.mainScreenView.loadingActivityIndicator.startAnimating()
         }
         
-        networkService.loadHeroesData(limit: limit, offset: offset) { [weak self] result in
+		networkService?.loadHeroesData(limit: limit, offset: offset) { [weak self] result in
+			guard let self = self else { return }
             switch result {
             case let .success(heroesWithThumbnails):
-                self?.dataProvider.heroesManager.fillHeroesStorage(withDataFromNetwork: heroesWithThumbnails,
-                                                     isRefreshingData: self?.isRefreshingData ?? false,
-                                                     isCutOffUnsuccessfulHeroesCard: self?.isCutOffUnsuccessfulHeroesCard ?? false)
-                if let heroesFromHeroesManager = self?.dataProvider.heroesManager.getAllHeroesFromStorage() {
+				self.dataProvider?.heroesManager.fillHeroesStorage(withDataFromNetwork: heroesWithThumbnails,
+																   isRefreshingData: self.isRefreshingData,
+                                                     isCutOffUnsuccessfulHeroesCard: self.isCutOffUnsuccessfulHeroesCard)
+				if let heroesFromHeroesManager = self.dataProvider?.heroesManager.getAllHeroesFromStorage() {
                     DispatchQueue.main.async {
-                        self?.dataProvider.fillHeroes(fromArray: heroesFromHeroesManager)
-                        self?.mainScreenView.collectionView.reloadData()
-                        self?.offset += self?.limit ?? 0
+                        self.dataProvider?.fillHeroes(fromArray: heroesFromHeroesManager)
+                        self.mainScreenView.collectionView.reloadData()
+						self.offset += self.limit
                     }
                 }
                 DispatchQueue.main.async {
-                    self?.mainScreenView.loadingDataStatusLabel.isHidden = true
-                    self?.mainScreenView.loadingActivityIndicator.stopAnimating()
-                    self?.isDataLoading = false
-                    self?.isRefreshingData = false
+                    self.mainScreenView.loadingDataStatusLabel.isHidden = true
+                    self.mainScreenView.loadingActivityIndicator.stopAnimating()
+                    self.isDataLoading = false
+                    self.isRefreshingData = false
                 }
                 completion?()
             case let .failure(error):

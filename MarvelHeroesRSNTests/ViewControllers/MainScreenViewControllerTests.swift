@@ -27,12 +27,20 @@ class MainScreenViewControllerTests: XCTestCase {
                                                         limit: limit,
                                                         offset: offset)
     var networkService: NetworkService?
+	var dataProvider: MainScreenDataProvider?
     var sut: MainScreenViewController?
     
     override func setUpWithError() throws {
         networkService = NetworkService(urlParametersContainer: urlParametersContainer)
-        sut = MainScreenViewController(networkService: networkService!)
-        networkService?.delegate = sut
+		dataProvider = MainScreenDataProvider()
+		guard let networkService = networkService,
+				let dataProvider = dataProvider else {
+			return
+		}
+		sut = MainScreenViewController(networkService: networkService,
+									   dataProvider: dataProvider)
+        networkService.delegate = sut
+		dataProvider.owningViewController = sut
     }
     
     override func tearDownWithError() throws {
@@ -50,7 +58,7 @@ class MainScreenViewControllerTests: XCTestCase {
     }
     
     func testWhenViewIsLoadedDataProviderIsNotNil() {
-        XCTAssertNotNil(sut?.dataProvider)
+		XCTAssertNotNil(sut?.dataProvider)
     }
     
     func testWhenViewIsLoadedCollectionViewDelegateIsSet() {
