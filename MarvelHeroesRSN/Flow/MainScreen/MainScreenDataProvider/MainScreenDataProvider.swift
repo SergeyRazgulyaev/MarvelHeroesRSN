@@ -56,7 +56,7 @@ extension MainScreenDataProvider: UICollectionViewDelegateFlowLayout {
 extension MainScreenDataProvider: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         guard indexPaths.contains(where: isLoadingCell(for:)),
-              !(owningViewController?.isDataLoading ?? false) else { return }
+			  !(owningViewController?.networkService?.isDataLoading ?? false) else { return }
         owningViewController?.loadHeroesDataFromNetWork()
     }
     

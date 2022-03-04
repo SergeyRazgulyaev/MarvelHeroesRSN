@@ -17,10 +17,9 @@ class MainScreenViewController: UIViewController, Alertable {
 	private(set) var dataProvider: MainScreenDataProvider?
     
     //MARK: - Properties for interaction with Network
-    private var networkService: NetworkServiceProtocol?
+    private(set) var networkService: NetworkServiceProtocol?
     private let limit: Int = 50
     private var offset: Int = 0
-    private(set) var isDataLoading: Bool = false
     private var isCutOffUnsuccessfulHeroesCard = true
     
     //MARK: - Properties for RefreshController
@@ -33,7 +32,8 @@ class MainScreenViewController: UIViewController, Alertable {
     }()
     
 	@objc private func reloadHeroesData(_ sender: UIRefreshControl) {
-		if !isDataLoading {
+		guard let networkService = networkService else { return }
+		if networkService.isDataLoading {
 			self.refreshControl.endRefreshing()
 		} else {
 			self.refreshControl.beginRefreshing()
@@ -49,7 +49,7 @@ class MainScreenViewController: UIViewController, Alertable {
     //MARK: - Init
 	init(networkService: NetworkServiceProtocol,
 		 dataProvider: DataProviderProtocol) {
-        self.networkService = networkService
+        self.networkService = networkService as? NetworkService
 		self.dataProvider = dataProvider as? MainScreenDataProvider
         super.init(nibName: nil, bundle: nil)
     }
@@ -89,16 +89,18 @@ extension MainScreenViewController {
     }
     
     func loadHeroesDataFromNetWork(completion: (() -> Void)? = nil) {
-        isDataLoading = true
+		guard let networkService = networkService else { return }
+
         if isRefreshingData {
             self.offset = 0
         }
+		
         DispatchQueue.main.async {
             self.mainScreenView.loadingDataStatusLabel.isHidden = false
             self.mainScreenView.loadingActivityIndicator.startAnimating()
         }
         
-		networkService?.loadHeroesData(limit: limit, offset: offset) { [weak self] result in
+		networkService.loadHeroesData(limit: limit, offset: offset) { [weak self] result in
 			guard let self = self else { return }
             switch result {
             case let .success(heroesWithThumbnails):
@@ -115,8 +117,7 @@ extension MainScreenViewController {
                 DispatchQueue.main.async {
                     self.mainScreenView.loadingDataStatusLabel.isHidden = true
                     self.mainScreenView.loadingActivityIndicator.stopAnimating()
-                    self.isDataLoading = false
-                    self.isRefreshingData = false
+					self.isRefreshingData = false
                 }
                 completion?()
             case let .failure(error):
@@ -132,7 +133,6 @@ extension MainScreenViewController: NetworkServiceDelegate {
             let failureAlertController = UIAlertController(title: "Attention!", message: "Error loading data from the network", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default)
             failureAlertController.addAction(okAction)
-            self.isDataLoading = false
             self.present(failureAlertController, animated: true) {
                 self.mainScreenView.loadingDataStatusLabel.isHidden = true
                 self.mainScreenView.loadingActivityIndicator.stopAnimating()

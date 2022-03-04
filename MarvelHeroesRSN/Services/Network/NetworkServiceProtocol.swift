@@ -8,5 +8,9 @@
 import Foundation
 
 protocol NetworkServiceProtocol {
+	// MARK: - Properties
+	var isDataLoading: Bool { get }
+
+	// MARK: - Methods
     func loadHeroesData(limit: Int, offset: Int, completion: ((Result<[HeroWithThumbnails], Error>) -> Void)?)
 }

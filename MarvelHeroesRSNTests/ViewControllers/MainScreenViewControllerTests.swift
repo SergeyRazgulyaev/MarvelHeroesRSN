@@ -45,6 +45,7 @@ class MainScreenViewControllerTests: XCTestCase {
     
     override func tearDownWithError() throws {
         networkService = nil
+		dataProvider = nil
         sut = nil
     }
     

@@ -8,5 +8,6 @@
 import Foundation
 
 protocol DataProviderProtocol {
-
+	// MARK: - Methods for interactions with Heroes
+	func fillHeroes(fromArray array: [Hero])
 }

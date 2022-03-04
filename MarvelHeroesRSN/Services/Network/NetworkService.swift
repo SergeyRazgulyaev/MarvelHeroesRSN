@@ -16,7 +16,8 @@ class NetworkService: NetworkServiceProtocol {
         let session = URLSession(configuration: configuration)
         return session
     }()
-    
+
+	private(set) var isDataLoading: Bool = false
     private var urlParametersContainer: URLParametersContainer
     private var urlComponents: URLComponents {
         var urlComponents = URLComponents()
@@ -32,7 +33,7 @@ class NetworkService: NetworkServiceProtocol {
         ]
         return urlComponents
     }
-    
+
     //MARK: - Delegate Property
     weak var delegate: NetworkServiceDelegate?
     
@@ -43,6 +44,7 @@ class NetworkService: NetworkServiceProtocol {
     
     //MARK: - Methods for loading Heroes Data from Network
     func loadHeroesData(limit: Int, offset: Int, completion: ((Result<[HeroWithThumbnails], Error>) -> Void)? = nil) {
+		setLoadingStatusTrue()
         configureURLParametersContainerWith(limit: limit, offset: offset)
         let url = urlComponents.url?.absoluteURL
         guard let url = url else {
@@ -60,6 +62,7 @@ class NetworkService: NetworkServiceProtocol {
                 print(error.localizedDescription)
                 completion?(.failure(error))
             }
+			self.setLoadingStatusFalse()
         }
         task.resume()
     }
@@ -68,4 +71,12 @@ class NetworkService: NetworkServiceProtocol {
         urlParametersContainer.limit = limit
         urlParametersContainer.offset = offset
     }
+
+	private func setLoadingStatusTrue() {
+		isDataLoading = true
+	}
+
+	private func setLoadingStatusFalse() {
+		isDataLoading = false
+	}
 }
