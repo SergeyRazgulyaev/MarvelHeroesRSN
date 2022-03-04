@@ -29,7 +29,10 @@ extension MainScreenDataProvider: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainScreenCollectionViewCell.cellIdentifier, for: indexPath) as? MainScreenCollectionViewCell else { return UICollectionViewCell() }
-        cell.configureCellWithParametersFromNetwork(heroAvatarImage: heroes[indexPath.row].image, heroName: heroes[indexPath.row].name)
+        cell.configureCellWithParametersFromNetwork(
+			heroAvatarImage: heroes[indexPath.row].image,
+			heroName: heroes[indexPath.row].name
+		)
         return cell
     }
 }

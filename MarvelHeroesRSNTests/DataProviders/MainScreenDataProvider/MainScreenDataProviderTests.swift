@@ -20,13 +20,14 @@ class MainScreenDataProviderTests: XCTestCase {
     
     let itemsIndentation: CGFloat = 10.0
 
-	let testHeroe = Hero(id: 123,
+	let testHero = Hero(id: 123,
 						 name: "TestHeroName",
 						 description: "TestHeroDescription",
 						 image: UIImage(systemName: "tortoise.fill")!)
-	lazy var testHeroes: [Hero] = [testHeroe]
+	lazy var testHeroes: [Hero] = [testHero]
     
-    var collectionView: UICollectionView?
+//    var collectionView: UICollectionView?
+	var mockCollectionView: MockCollectionView?
 	var networkService: NetworkService?
 	var mainScreenViewController: MainScreenViewController?
 	var sut: MainScreenDataProvider?
@@ -42,6 +43,7 @@ class MainScreenDataProviderTests: XCTestCase {
 
     
     override func setUpWithError() throws {
+
         networkService = NetworkService(urlParametersContainer: urlParametersContainer)
 		sut = MainScreenDataProvider()
 		guard let networkService = networkService, let sut = sut else {
@@ -53,40 +55,45 @@ class MainScreenDataProviderTests: XCTestCase {
 
         networkService.delegate = mainScreenViewController
 		sut.owningViewController = mainScreenViewController
-
-		collectionView = {
-            let layout = UICollectionViewFlowLayout()
-            layout.scrollDirection = .vertical
-            layout.minimumLineSpacing = itemsIndentation
-            layout.minimumInteritemSpacing = itemsIndentation
-            let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-            collectionView.backgroundColor = .black
-            collectionView.translatesAutoresizingMaskIntoConstraints = false
-            return collectionView
-        }()
-        collectionView?.dataSource = sut
+		mockCollectionView = MockCollectionView()
+		mockCollectionView?.dataSource = sut
+		mockCollectionView?.register(MockHeroCell.self,
+									forCellWithReuseIdentifier: String(describing: MainScreenCollectionViewCell.self))
     }
 
     override func tearDownWithError() throws {
         sut = nil
-        collectionView = nil
+		mockCollectionView = nil
         networkService = nil
         mainScreenViewController = nil
     }
     
     func testNumberOfSectionsIsOne() {
-        XCTAssertEqual(collectionView?.numberOfSections, 1)
+        XCTAssertEqual(mockCollectionView?.numberOfSections, 1)
     }
     
 	func testNumberOfItemsInSectionAtStartIsZero() {
-		XCTAssertEqual(collectionView?.numberOfItems(inSection: 0), 0)
+		XCTAssertEqual(mockCollectionView?.numberOfItems(inSection: 0), 0)
+	}
+
+	func testCellForItemAtZeroIndexPathActivated() {
+		guard let mockCollectionView = mockCollectionView else {
+			return
+		}
+		sut?.fillHeroes(fromArray: testHeroes)
+		mockCollectionView.reloadData()
+		_ = mockCollectionView.cellForItem(at: IndexPath(row: 0, section: 0))
+
+		XCTAssertTrue(mockCollectionView.isCellForItemAtZeroIndexPathActivated)
 	}
 }
 
 extension MainScreenDataProviderTests {
 	class MockCollectionView: UICollectionView {
 		let itemsIndentation: CGFloat = 10.0
+
 		var isCellForItemAtZeroIndexPathActivated = false
+		var cellIsDequeued = false
 
 		override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
 			let layout = UICollectionViewFlowLayout()
@@ -105,6 +112,21 @@ extension MainScreenDataProviderTests {
 		override func cellForItem(at indexPath: IndexPath) -> UICollectionViewCell? {
 			isCellForItemAtZeroIndexPathActivated = true
 			return super.cellForItem(at: indexPath)
+		}
+
+		override func dequeueReusableCell(withReuseIdentifier identifier: String,
+										  for indexPath: IndexPath)
+		-> UICollectionViewCell {
+			cellIsDequeued = true
+			return super.dequeueReusableCell(withReuseIdentifier: identifier,
+											 for: indexPath)
+		}
+	}
+
+	class MockHeroCell: MainScreenCollectionViewCell {
+		override func configureCellWithParametersFromNetwork(heroAvatarImage: UIImage, heroName: String) {
+			heroNameLabel.text = heroName
+			heroAvatarImageView.image = heroAvatarImage
 		}
 	}
 }
