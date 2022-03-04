@@ -33,6 +33,7 @@
 		C5AE64172715979B009BB463 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE64162715979B009BB463 /* NetworkService.swift */; };
 		C5AE64192715F642009BB463 /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE64182715F642009BB463 /* Hero.swift */; };
 		C5D283CC271E233400F13297 /* URLParametersContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D283CB271E233400F13297 /* URLParametersContainer.swift */; };
+		C5E192C527B935F3004DD059 /* DataProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E192C427B935F3004DD059 /* DataProviderProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		C5AE64162715979B009BB463 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		C5AE64182715F642009BB463 /* Hero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
 		C5D283CB271E233400F13297 /* URLParametersContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLParametersContainer.swift; sourceTree = "<group>"; };
+		C5E192C427B935F3004DD059 /* DataProviderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProviderProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -332,10 +334,19 @@
 		C5AE641A27164424009BB463 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				C5E192C327B935DD004DD059 /* DataProvider */,
 				C59A84602742695C00B193FC /* HeroesManager */,
 				C5AE63DB2714518D009BB463 /* Network */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		C5E192C327B935DD004DD059 /* DataProvider */ = {
+			isa = PBXGroup;
+			children = (
+				C5E192C427B935F3004DD059 /* DataProviderProtocol.swift */,
+			);
+			path = DataProvider;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -459,6 +470,7 @@
 				C5AE63F527158CB2009BB463 /* HeroThumbnail.swift in Sources */,
 				C5AE63F327158C8D009BB463 /* HeroWithThumbnails.swift in Sources */,
 				C5AE63EF27158C15009BB463 /* GetHeroesResult.swift in Sources */,
+				C5E192C527B935F3004DD059 /* DataProviderProtocol.swift in Sources */,
 				C5AE63F127158C4A009BB463 /* HeroesData.swift in Sources */,
 				C5AE63E22714535D009BB463 /* MainScreenViewController.swift in Sources */,
 				C59A8464274269B700B193FC /* HeroesManagerProtocol.swift in Sources */,

@@ -32,9 +32,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                                                             hash: urlHash,
                                                             limit: limit,
                                                             offset: offset)
-        let networkService = NetworkService(urlParametersContainer: urlParametersContainer)
-        let mainScreenViewController = MainScreenViewController(networkService: networkService)
-        networkService.delegate = mainScreenViewController
+		let networkService = NetworkService(urlParametersContainer: urlParametersContainer)
+		let dataProvider = MainScreenDataProvider()
+		let mainScreenViewController = MainScreenViewController(
+			networkService: networkService,
+			dataProvider: dataProvider)
+		networkService.delegate = mainScreenViewController
+		dataProvider.owningViewController = mainScreenViewController
         
         let navigationController = UINavigationController(rootViewController: mainScreenViewController)
         

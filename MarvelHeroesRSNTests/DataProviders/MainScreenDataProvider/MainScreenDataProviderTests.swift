@@ -26,9 +26,11 @@ class MainScreenDataProviderTests: XCTestCase {
 						 image: UIImage(systemName: "tortoise.fill")!)
 	lazy var testHeroes: [Hero] = [testHeroe]
     
-    var sut: MainScreenDataProvider?
     var collectionView: UICollectionView?
-    
+	var networkService: NetworkService?
+	var mainScreenViewController: MainScreenViewController?
+	var sut: MainScreenDataProvider?
+
     lazy var urlParametersContainer = URLParametersContainer(urlScheme: urlScheme,
                                                         baseURL: baseURL,
                                                         urlPath: urlPath,
@@ -37,15 +39,22 @@ class MainScreenDataProviderTests: XCTestCase {
                                                         hash: urlHash,
                                                         limit: limit,
                                                         offset: offset)
-    var networkService: NetworkService?
-    var mainScreenViewController: MainScreenViewController?
+
     
     override func setUpWithError() throws {
         networkService = NetworkService(urlParametersContainer: urlParametersContainer)
-        mainScreenViewController = MainScreenViewController(networkService: networkService!)
-        networkService?.delegate = mainScreenViewController
-        sut = MainScreenDataProvider(owningViewController: mainScreenViewController!)
-        collectionView = {
+		sut = MainScreenDataProvider()
+		guard let networkService = networkService, let sut = sut else {
+			return
+		}
+		mainScreenViewController = MainScreenViewController(
+			networkService: networkService,
+			dataProvider: sut)
+
+        networkService.delegate = mainScreenViewController
+		sut.owningViewController = mainScreenViewController
+
+		collectionView = {
             let layout = UICollectionViewFlowLayout()
             layout.scrollDirection = .vertical
             layout.minimumLineSpacing = itemsIndentation

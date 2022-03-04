@@ -7,18 +7,14 @@
 
 import UIKit
 
-class MainScreenDataProvider: NSObject {
+class MainScreenDataProvider: NSObject, DataProviderProtocol {
     //MARK: - Properties
     private let cellNumberFromEndForPrefetching: Int = 4
     private(set) var heroes: [Hero] = []
     private(set) var heroesManager = HeroesManager()
-    private(set) weak var owningViewController: MainScreenViewController?
+	
+    weak var owningViewController: MainScreenViewController?
 
-    //MARK: - Init
-    init(owningViewController: MainScreenViewController) {
-        self.owningViewController = owningViewController
-    }
-    
     //MARK: - Methods
     func fillHeroes(fromArray array: [Hero]) {
         heroes = array
