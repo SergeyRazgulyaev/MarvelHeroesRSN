@@ -10,13 +10,15 @@ import UIKit
 class MainScreenDataProvider: NSObject, DataProviderProtocol {
     //MARK: - Properties
     private let cellNumberFromEndForPrefetching: Int = 4
-	private var heroes: [Hero] {
-		guard let heroesManager = heroesManager else { return [] }
-		return heroesManager.getAllHeroesFromStorage()
-	}
+	private var heroes: [Hero] = []
 
     weak var owningViewController: MainScreenViewController?
 	weak var heroesManager: HeroesManagerProtocol?
+
+	// MARK: - Methods
+	func fillHeroes(from heroesStorage: [Hero]) {
+		heroes = heroesStorage
+	}
 }
 
 //MARK: - UICollectionViewDataSource

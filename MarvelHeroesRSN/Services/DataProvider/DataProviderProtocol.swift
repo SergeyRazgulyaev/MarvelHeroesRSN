@@ -10,7 +10,10 @@ import UIKit
 protocol DataProviderProtocol: UICollectionViewDataSource,
 							   UICollectionViewDelegate,
 							   UICollectionViewDataSourcePrefetching {
+	// MARK: - Properties
 	var owningViewController: MainScreenViewController? { get set }
 	var heroesManager: HeroesManagerProtocol? { get set }
-	
+
+	// MARK: - Methods
+	func fillHeroes(from heroesStorage: [Hero])
 }

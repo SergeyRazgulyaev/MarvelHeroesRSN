@@ -114,9 +114,14 @@ extension MainScreenViewController {
 					withDataFromNetwork: heroesWithThumbnails,
 					isRefreshingData: self.isRefreshingData,
 					isCutOffUnsuccessfulHeroesCard: self.isCutOffUnsuccessfulHeroesCard)
+				if let heroesFromStorage = self.heroesManager?.getAllHeroesFromStorage() {
+					DispatchQueue.main.async {
+						self.dataProvider?.fillHeroes(from: heroesFromStorage)
+						self.mainScreenView.collectionView.reloadData()
+						self.offset += self.limit
+					}
+				}
 				DispatchQueue.main.async {
-					self.mainScreenView.collectionView.reloadData()
-					self.offset += self.limit
 					self.mainScreenView.loadingDataStatusLabel.isHidden = true
 					self.mainScreenView.loadingActivityIndicator.stopAnimating()
 					self.isRefreshingData = false
