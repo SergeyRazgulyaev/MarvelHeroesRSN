@@ -9,39 +9,23 @@ import XCTest
 @testable import MarvelHeroesRSN
 
 class MainScreenDataProviderTests: XCTestCase {
-    let urlScheme = "https"
-    let baseURL = "gateway.marvel.com"
-    let urlPath = "/v1/public/characters"
-    let urlTS = 1
-    let urlApiKey = "2acb17a14fab947ec914f6731a6f3585"
-    let urlHash = "7a082702e822cdb6e752c8ca132ccd92"
-    let limit = 50
-    let offset = 0
-    
-    let itemsIndentation: CGFloat = 10.0
+	var sut: MainScreenDataProvider!
+	
+	var testHero: Hero!
+	var heroesTestArray: [Hero]!
 
-	let testHero = Hero(id: 123,
-						 name: "TestHeroName",
-						 description: "TestHeroDescription",
-						 image: UIImage(systemName: "tortoise.fill")!)
-	lazy var testHeroes: [Hero] = [testHero]
-
+	var urlParametersContainer: URLParametersContainer!
 	var networkService: NetworkServiceProtocol!
 	var heroesManager: HeroesManagerProtocol!
 	var mainScreenViewController: MainScreenViewController!
-	var sut: MainScreenDataProvider!
 
-    lazy var urlParametersContainer = URLParametersContainer(urlScheme: urlScheme,
-                                                        baseURL: baseURL,
-                                                        urlPath: urlPath,
-                                                        ts: urlTS,
-                                                        apiKey: urlApiKey,
-                                                        hash: urlHash,
-                                                        limit: limit,
-                                                        offset: offset)
 
     
     override func setUpWithError() throws {
+		urlParametersContainer = startURLParametersContainer
+		testHero = MockHero.hero1
+		heroesTestArray = [testHero]
+
         networkService = MockNetworkService()
 		heroesManager = HeroesManager()
 		sut = MainScreenDataProvider()
@@ -54,8 +38,12 @@ class MainScreenDataProviderTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-        sut = nil
+		sut = nil
+		testHero = nil
+		heroesTestArray = nil
+		urlParametersContainer = nil
         networkService = nil
+		heroesManager = nil
         mainScreenViewController = nil
     }
     
@@ -71,7 +59,7 @@ class MainScreenDataProviderTests: XCTestCase {
 //
 //	func testCellForItemAtZeroIndexPathActivated() {
 //		guard let sut = sut else { return }
-//		sut.fillHeroes(fromArray: testHeroes)
+//		sut.fillHeroes(fromArray: heroesTestArray)
 //
 //		let mockCollectionView = sut.owningViewController?.mainScreenView.collectionView as? MockCollectionView
 //		mockCollectionView?.reloadData()
@@ -84,7 +72,7 @@ class MainScreenDataProviderTests: XCTestCase {
 //	func testCellForItemAtZeroIndexPathCallsConfigure() {
 //		guard let sut = sut else { return }
 //
-//		sut.fillHeroes(fromArray: testHeroes)
+//		sut.fillHeroes(fromArray: heroesTestArray)
 //
 //		//не понятно, как заменить collectionView у MainScreenViewController на mockCollectionView
 //		let mockCollectionView = sut.owningViewController?.mainScreenView.collectionView as? MockCollectionView

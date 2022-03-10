@@ -1,5 +1,5 @@
 //
-//  MockHeroWithThumbnails.swift
+//  MockHeroFromNetwork.swift
 //  MarvelHeroesRSNTests
 //
 //  Created by Sergey Razgulyaev on 10.03.2022.
@@ -8,11 +8,11 @@
 import Foundation
 @testable import MarvelHeroesRSN
 
-struct MockHeroWithThumbnails {
+struct MockHeroFromNetwork {
 	static let heroWithGoodThumbnails = HeroWithThumbnails(
 		id: 1,
-		name: "TestHeroName1TestHeroName1",
-		description: "TestHeroDescription1TestHeroDescription1",
+		name: "TestHeroName1",
+		description: "TestHeroDescription1",
 		thumbnail: HeroThumbnail(thumbnailPath: "http://i.annihil.us/u/prod/marvel/i/mg/6/20/52602f21f29ec",
 								 thumbnailExtension: "jpg"))
 

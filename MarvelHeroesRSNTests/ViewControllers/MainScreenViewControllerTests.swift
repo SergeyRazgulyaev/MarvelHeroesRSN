@@ -9,29 +9,16 @@ import XCTest
 @testable import MarvelHeroesRSN
 
 class MainScreenViewControllerTests: XCTestCase {
-    let urlScheme = "https"
-    let baseURL = "gateway.marvel.com"
-    let urlPath = "/v1/public/characters"
-    let urlTS = 1
-    let urlApiKey = "2acb17a14fab947ec914f6731a6f3585"
-    let urlHash = "7a082702e822cdb6e752c8ca132ccd92"
-    let limit = 50
-    let offset = 0
-    
-    lazy var urlParametersContainer = URLParametersContainer(urlScheme: urlScheme,
-                                                        baseURL: baseURL,
-                                                        urlPath: urlPath,
-                                                        ts: urlTS,
-                                                        apiKey: urlApiKey,
-                                                        hash: urlHash,
-                                                        limit: limit,
-                                                        offset: offset)
+	var sut: MainScreenViewController!
+
+	var urlParametersContainer: URLParametersContainer!
     var networkService: NetworkServiceProtocol!
 	var heroesManager: HeroesManagerProtocol!
 	var dataProvider: DataProviderProtocol!
-    var sut: MainScreenViewController!
-    
+
     override func setUpWithError() throws {
+		urlParametersContainer = startURLParametersContainer
+
         networkService = MockNetworkService()
 		heroesManager = HeroesManager()
 		dataProvider = MainScreenDataProvider()
@@ -44,9 +31,11 @@ class MainScreenViewControllerTests: XCTestCase {
     }
     
     override func tearDownWithError() throws {
+		sut = nil
+		urlParametersContainer = nil
         networkService = nil
+		heroesManager = nil
 		dataProvider = nil
-        sut = nil
     }
     
     func testIsViewLoaded() {
