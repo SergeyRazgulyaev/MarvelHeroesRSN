@@ -12,9 +12,12 @@ class MainScreenViewController: UIViewController, Alertable {
     private(set) lazy var mainScreenView: MainScreenView = {
         return MainScreenView()
     }()
-    
+
+	//MARK: - Properties for interaction with HeroesStorage
+	private(set) var heroesManager: HeroesManagerProtocol?
+
     //MARK: - Properties for interaction with CollectionView
-	private(set) var dataProvider: MainScreenDataProvider?
+	private(set) var dataProvider: DataProviderProtocol?
     
     //MARK: - Properties for interaction with Network
     private(set) var networkService: NetworkServiceProtocol?
@@ -48,8 +51,10 @@ class MainScreenViewController: UIViewController, Alertable {
     
     //MARK: - Init
 	init(networkService: NetworkServiceProtocol,
+		 heroesManager: HeroesManagerProtocol,
 		 dataProvider: DataProviderProtocol) {
         self.networkService = networkService as? NetworkService
+		self.heroesManager = heroesManager as? HeroesManager
 		self.dataProvider = dataProvider as? MainScreenDataProvider
         super.init(nibName: nil, bundle: nil)
     }
@@ -71,6 +76,7 @@ class MainScreenViewController: UIViewController, Alertable {
     
     //MARK: - Configuration Methods
     func configureViewController() {
+		guard let dataProvider = dataProvider else { return }
         mainScreenView.collectionView.delegate = dataProvider
         mainScreenView.collectionView.dataSource = dataProvider
         mainScreenView.collectionView.prefetchDataSource = dataProvider
@@ -83,12 +89,12 @@ class MainScreenViewController: UIViewController, Alertable {
 //MARK: - Interaction with Network
 extension MainScreenViewController {
     func loadHeroesDataFromNetWorkIfNeeded() {
-		if dataProvider?.heroesManager.getAllHeroesFromStorage().count == 0 {
-            loadHeroesDataFromNetWork()
+		if heroesManager?.getAllHeroesFromStorage().count == 0 {
+			loadHeroesDataFromNetWork() { }
         }
     }
     
-    func loadHeroesDataFromNetWork(completion: (() -> Void)? = nil) {
+	func loadHeroesDataFromNetWork(completion: @escaping (() -> Void)) {
 		guard let networkService = networkService else { return }
 
         if isRefreshingData {
@@ -103,23 +109,19 @@ extension MainScreenViewController {
 		networkService.loadHeroesData(limit: limit, offset: offset) { [weak self] result in
 			guard let self = self else { return }
             switch result {
-            case let .success(heroesWithThumbnails):
-				self.dataProvider?.heroesManager.fillHeroesStorage(withDataFromNetwork: heroesWithThumbnails,
-																   isRefreshingData: self.isRefreshingData,
-                                                     isCutOffUnsuccessfulHeroesCard: self.isCutOffUnsuccessfulHeroesCard)
-				if let heroesFromHeroesManager = self.dataProvider?.heroesManager.getAllHeroesFromStorage() {
-                    DispatchQueue.main.async {
-                        self.dataProvider?.fillHeroes(fromArray: heroesFromHeroesManager)
-                        self.mainScreenView.collectionView.reloadData()
-						self.offset += self.limit
-                    }
-                }
-                DispatchQueue.main.async {
-                    self.mainScreenView.loadingDataStatusLabel.isHidden = true
-                    self.mainScreenView.loadingActivityIndicator.stopAnimating()
+			case let .success(heroesWithThumbnails):
+				self.heroesManager?.fillHeroesStorage(
+					withDataFromNetwork: heroesWithThumbnails,
+					isRefreshingData: self.isRefreshingData,
+					isCutOffUnsuccessfulHeroesCard: self.isCutOffUnsuccessfulHeroesCard)
+				DispatchQueue.main.async {
+					self.mainScreenView.collectionView.reloadData()
+					self.offset += self.limit
+					self.mainScreenView.loadingDataStatusLabel.isHidden = true
+					self.mainScreenView.loadingActivityIndicator.stopAnimating()
 					self.isRefreshingData = false
-                }
-                completion?()
+				}
+				completion()
             case let .failure(error):
                 print(error.localizedDescription)
             }

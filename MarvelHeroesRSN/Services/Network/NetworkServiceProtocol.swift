@@ -10,7 +10,10 @@ import Foundation
 protocol NetworkServiceProtocol {
 	// MARK: - Properties
 	var isDataLoading: Bool { get }
+	var delegate: NetworkServiceDelegate? { get set }
 
 	// MARK: - Methods
-    func loadHeroesData(limit: Int, offset: Int, completion: ((Result<[HeroWithThumbnails], Error>) -> Void)?)
+	func loadHeroesData(limit: Int,
+						offset: Int,
+						completion: @escaping ((Result<[HeroWithThumbnails], Error>) -> Void))
 }

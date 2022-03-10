@@ -5,9 +5,12 @@
 //  Created by Sergey Razgulyaev on 13.02.2022.
 //
 
-import Foundation
+import UIKit
 
-protocol DataProviderProtocol {
-	// MARK: - Methods for interactions with Heroes
-	func fillHeroes(fromArray array: [Hero])
+protocol DataProviderProtocol: UICollectionViewDataSource,
+							   UICollectionViewDelegate,
+							   UICollectionViewDataSourcePrefetching {
+	var owningViewController: MainScreenViewController? { get set }
+	var heroesManager: HeroesManagerProtocol? { get set }
+	
 }

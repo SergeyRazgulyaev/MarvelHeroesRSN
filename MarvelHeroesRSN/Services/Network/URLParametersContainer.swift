@@ -17,3 +17,13 @@ struct URLParametersContainer {
     var limit: Int?
     var offset: Int?
 }
+
+let startURLParametersContainer = URLParametersContainer(
+	urlScheme: "https",
+	baseURL: "gateway.marvel.com",
+	urlPath: "/v1/public/characters",
+	ts: 1,
+	apiKey: "2acb17a14fab947ec914f6731a6f3585",
+	hash: "7a082702e822cdb6e752c8ca132ccd92",
+	limit: 50,
+	offset: 0)

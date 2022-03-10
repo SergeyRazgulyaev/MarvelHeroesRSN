@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol HeroesManagerProtocol {
+protocol HeroesManagerProtocol: AnyObject {
     //MARK: - Getting Methods
     func getHero(byID id: Int) -> Hero?
     func getHero(byName name: String) -> Hero?

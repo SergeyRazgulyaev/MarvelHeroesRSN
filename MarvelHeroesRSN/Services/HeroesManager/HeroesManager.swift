@@ -54,7 +54,8 @@ class HeroesManager: HeroesManagerProtocol {
         }
         heroesStorage += tempArray
     }
-    
+
+	// MARK: - Private methods
     private func makeHero(fromHeroNetworkData heroNetworkData: HeroWithThumbnails) -> Hero? {
         let thumbnailPathWithExtension = heroNetworkData.thumbnail.thumbnailPath + "." + heroNetworkData.thumbnail.thumbnailExtension
         guard let url = URL(string: thumbnailPathWithExtension),

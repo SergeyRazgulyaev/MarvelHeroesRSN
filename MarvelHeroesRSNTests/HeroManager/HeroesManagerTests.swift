@@ -9,36 +9,20 @@ import XCTest
 @testable import MarvelHeroesRSN
 
 class HeroesManagerTests: XCTestCase {
-    var sut: HeroesManagerProtocol?
-    var heroWithGoodThumbnails: HeroWithThumbnails?
-    var heroWithBadPathThumbnails: HeroWithThumbnails?
-    var heroWithBadExtensionThumbnails: HeroWithThumbnails?
-    var heroWithCrashedExtensionThumbnails: HeroWithThumbnails?
-    var heroesWithThumbnailsTestArray: [HeroWithThumbnails]?
-    var heroesTestArray: [Hero]?
+    var sut: HeroesManagerProtocol!
+    var heroWithGoodThumbnails: HeroWithThumbnails!
+    var heroWithBadPathThumbnails: HeroWithThumbnails!
+    var heroWithBadExtensionThumbnails: HeroWithThumbnails!
+    var heroWithCrashedExtensionThumbnails: HeroWithThumbnails!
+    var heroesWithThumbnailsTestArray: [HeroWithThumbnails]!
+    var heroesTestArray: [Hero]!
     
     override func setUpWithError() throws {
         sut = HeroesManager()
-        heroWithGoodThumbnails = HeroWithThumbnails(id: 1,
-                                                    name: "testName1",
-                                                    description: "testDescription1",
-                                                    thumbnail: HeroThumbnail(thumbnailPath: "http://i.annihil.us/u/prod/marvel/i/mg/6/20/52602f21f29ec",
-                                                                             thumbnailExtension: "jpg"))
-        heroWithBadPathThumbnails = HeroWithThumbnails(id: 2,
-                                                       name: "testName2",
-                                                       description: "testDescription2",
-                                                       thumbnail: HeroThumbnail(thumbnailPath: "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available",
-                                                                                thumbnailExtension: "jpg"))
-        heroWithBadExtensionThumbnails = HeroWithThumbnails(id: 3,
-                                                            name: "testName3",
-                                                            description: "testDescription3",
-                                                            thumbnail: HeroThumbnail(thumbnailPath: "http://i.annihil.us/u/prod/marvel/i/mg/5/e0/4c0035c9c425d",
-                                                                                     thumbnailExtension: "gif"))
-        heroWithCrashedExtensionThumbnails = HeroWithThumbnails(id: 4,
-                                                            name: "testName4",
-                                                            description: "testDescription4",
-                                                            thumbnail: HeroThumbnail(thumbnailPath: "http://i.annihil.us/u/prod/marvel/i/mg/6/20/52602f21f29ec",
-                                                                                     thumbnailExtension: "crashedExtension"))
+		heroWithGoodThumbnails = MockHeroWithThumbnails.heroWithGoodThumbnails
+		heroWithBadPathThumbnails = MockHeroWithThumbnails.heroWithBadPathThumbnails
+		heroWithBadExtensionThumbnails = MockHeroWithThumbnails.heroWithBadExtensionThumbnails
+		heroWithCrashedExtensionThumbnails = MockHeroWithThumbnails.heroWithCrashedExtensionThumbnails
         heroesWithThumbnailsTestArray = []
         heroesWithThumbnailsTestArray?.append(heroWithGoodThumbnails!)
         heroesWithThumbnailsTestArray?.append(heroWithBadPathThumbnails!)

@@ -10,15 +10,15 @@ import UIKit
 protocol Alertable {
     func showAttantionAlert(viewController: UIViewController,
                             message: String,
-                            handler: ((UIAlertAction) -> ())?,
-                            completion: (() -> Void)?)
+                            handler: @escaping ((UIAlertAction) -> ()),
+                            completion: @escaping (() -> Void))
 }
 
 extension Alertable {
     func showAttantionAlert(viewController: UIViewController,
                             message: String,
-                            handler: ((UIAlertAction) -> ())? = nil,
-                            completion: (() -> Void)? = nil) {
+                            handler: @escaping ((UIAlertAction) -> ()),
+                            completion: @escaping (() -> Void)) {
         let alertController = UIAlertController(title: "Attention",
                                                 message: message,
                                                 preferredStyle: .alert)

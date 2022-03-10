@@ -26,19 +26,19 @@ class MainScreenViewControllerTests: XCTestCase {
                                                         hash: urlHash,
                                                         limit: limit,
                                                         offset: offset)
-    var networkService: NetworkService?
-	var dataProvider: MainScreenDataProvider?
-    var sut: MainScreenViewController?
+    var networkService: NetworkServiceProtocol!
+	var heroesManager: HeroesManagerProtocol!
+	var dataProvider: DataProviderProtocol!
+    var sut: MainScreenViewController!
     
     override func setUpWithError() throws {
-        networkService = NetworkService(urlParametersContainer: urlParametersContainer)
+        networkService = MockNetworkService()
+		heroesManager = HeroesManager()
 		dataProvider = MainScreenDataProvider()
-		guard let networkService = networkService,
-				let dataProvider = dataProvider else {
-			return
-		}
-		sut = MainScreenViewController(networkService: networkService,
-									   dataProvider: dataProvider)
+		sut = MainScreenViewController(
+			networkService: networkService,
+			heroesManager: heroesManager,
+			dataProvider: dataProvider)
         networkService.delegate = sut
 		dataProvider.owningViewController = sut
     }

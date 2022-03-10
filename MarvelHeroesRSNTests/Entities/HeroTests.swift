@@ -9,13 +9,10 @@ import XCTest
 @testable import MarvelHeroesRSN
 
 class HeroTests: XCTestCase {
-    var hero: Hero?
+    var hero: Hero!
     
     override func setUpWithError() throws {
-        hero = Hero(id: 1,
-                        name: "TestHeroName",
-                        description: "TestHeroDescription",
-                        image: UIImage(systemName: "tortoise.fill")!)
+		hero = MockHero.hero1
     }
     
     override func tearDownWithError() throws {
@@ -28,8 +25,8 @@ class HeroTests: XCTestCase {
     
     func testWhenGivenDataSetsData() {
         XCTAssertEqual(hero?.id, 1)
-        XCTAssertEqual(hero?.name, "TestHeroName")
-        XCTAssertEqual(hero?.description, "TestHeroDescription")
+        XCTAssertEqual(hero?.name, "TestHeroName1")
+        XCTAssertEqual(hero?.description, "TestHeroDescription1")
         XCTAssertEqual(hero?.image, UIImage(systemName: "tortoise.fill"))
     }
 }

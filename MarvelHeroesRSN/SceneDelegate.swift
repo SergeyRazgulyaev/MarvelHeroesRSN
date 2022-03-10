@@ -14,31 +14,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         window?.windowScene = windowScene
-        
-        let urlScheme = "https"
-        let baseURL = "gateway.marvel.com"
-        let urlPath = "/v1/public/characters"
-        let urlTS = 1
-        let urlApiKey = "2acb17a14fab947ec914f6731a6f3585"
-        let urlHash = "7a082702e822cdb6e752c8ca132ccd92"
-        let limit = 50
-        let offset = 0
-        
-        let urlParametersContainer = URLParametersContainer(urlScheme: urlScheme,
-                                                            baseURL: baseURL,
-                                                            urlPath: urlPath,
-                                                            ts: urlTS,
-                                                            apiKey: urlApiKey,
-                                                            hash: urlHash,
-                                                            limit: limit,
-                                                            offset: offset)
+
+        let urlParametersContainer = startURLParametersContainer
+
 		let networkService = NetworkService(urlParametersContainer: urlParametersContainer)
-		let dataProvider = MainScreenDataProvider()
+		let heroesManager = HeroesManager()
+		let mainScreenDataProvider = MainScreenDataProvider()
+
 		let mainScreenViewController = MainScreenViewController(
 			networkService: networkService,
-			dataProvider: dataProvider)
+			heroesManager: heroesManager,
+			dataProvider: mainScreenDataProvider)
 		networkService.delegate = mainScreenViewController
-		dataProvider.owningViewController = mainScreenViewController
+		mainScreenDataProvider.owningViewController = mainScreenViewController
+		mainScreenDataProvider.heroesManager = heroesManager
         
         let navigationController = UINavigationController(rootViewController: mainScreenViewController)
         

@@ -10,15 +10,13 @@ import UIKit
 class MainScreenDataProvider: NSObject, DataProviderProtocol {
     //MARK: - Properties
     private let cellNumberFromEndForPrefetching: Int = 4
-    private(set) var heroes: [Hero] = []
-    private(set) var heroesManager = HeroesManager()
-	
-    weak var owningViewController: MainScreenViewController?
+	private var heroes: [Hero] {
+		guard let heroesManager = heroesManager else { return [] }
+		return heroesManager.getAllHeroesFromStorage()
+	}
 
-    //MARK: - Methods
-    func fillHeroes(fromArray array: [Hero]) {
-        heroes = array
-    }
+    weak var owningViewController: MainScreenViewController?
+	weak var heroesManager: HeroesManagerProtocol?
 }
 
 //MARK: - UICollectionViewDataSource
@@ -60,7 +58,7 @@ extension MainScreenDataProvider: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         guard indexPaths.contains(where: isLoadingCell(for:)),
 			  !(owningViewController?.networkService?.isDataLoading ?? false) else { return }
-        owningViewController?.loadHeroesDataFromNetWork()
+		owningViewController?.loadHeroesDataFromNetWork() { }
     }
     
     func isLoadingCell(for indexPath: IndexPath) -> Bool {
