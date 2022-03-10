@@ -63,8 +63,8 @@ class HeroesManagerTests: XCTestCase {
         heroesTestArray = sut?.getAllHeroesFromStorage()
         let hero = sut?.getHero(byID: 2)
         XCTAssertEqual(hero?.id, 2)
-        XCTAssertEqual(hero?.name, "testName2")
-        XCTAssertEqual(hero?.description, "testDescription2")
+        XCTAssertEqual(hero?.name, "TestHeroName2")
+        XCTAssertEqual(hero?.description, "TestHeroDescription2")
     }
     
     func testGenNilHeroByIDFromHeroesManager() {
@@ -82,10 +82,10 @@ class HeroesManagerTests: XCTestCase {
                                          isRefreshingData: false,
                                          isCutOffUnsuccessfulHeroesCard: false)
         heroesTestArray = sut?.getAllHeroesFromStorage()
-        let hero = sut?.getHero(byName: "testName2")
+        let hero = sut?.getHero(byName: "TestHeroName2")
         XCTAssertEqual(hero?.id, 2)
-        XCTAssertEqual(hero?.name, "testName2")
-        XCTAssertEqual(hero?.description, "testDescription2")
+        XCTAssertEqual(hero?.name, "TestHeroName2")
+        XCTAssertEqual(hero?.description, "TestHeroDescription2")
     }
     
     func testGenNilHeroByNameFromHeroesManager() {
@@ -94,7 +94,7 @@ class HeroesManagerTests: XCTestCase {
                                          isRefreshingData: false,
                                          isCutOffUnsuccessfulHeroesCard: false)
         heroesTestArray = sut?.getAllHeroesFromStorage()
-        let hero = sut?.getHero(byName: "testName1")
+        let hero = sut?.getHero(byName: "TestHeroName1")
         XCTAssertEqual(hero, nil)
     }
     
