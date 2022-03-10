@@ -18,24 +18,25 @@ class MainScreenViewControllerTests: XCTestCase {
 
     override func setUpWithError() throws {
 		urlParametersContainer = startURLParametersContainer
-
         networkService = MockNetworkService()
-		heroesManager = HeroesManager()
-		dataProvider = MainScreenDataProvider()
+		heroesManager = MockHeroesManager()
+		dataProvider = MockMainScreenDataProvider()
+
 		sut = MainScreenViewController(
 			networkService: networkService,
 			heroesManager: heroesManager,
 			dataProvider: dataProvider)
+
         networkService.delegate = sut
 		dataProvider.owningViewController = sut
     }
     
     override func tearDownWithError() throws {
-		sut = nil
 		urlParametersContainer = nil
         networkService = nil
 		heroesManager = nil
 		dataProvider = nil
+		sut = nil
     }
     
     func testIsViewLoaded() {

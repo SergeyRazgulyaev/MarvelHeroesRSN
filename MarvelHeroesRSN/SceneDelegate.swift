@@ -28,9 +28,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		networkService.delegate = mainScreenViewController
 		mainScreenDataProvider.owningViewController = mainScreenViewController
 		mainScreenDataProvider.heroesManager = heroesManager
-        
+
         let navigationController = UINavigationController(rootViewController: mainScreenViewController)
-        
+
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }

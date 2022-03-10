@@ -26,6 +26,7 @@
 		C59EDDB627D9EAEE00D240E3 /* MockNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59EDDB527D9EAEE00D240E3 /* MockNetworkService.swift */; };
 		C59EDDB827D9EB7500D240E3 /* MockMainScreenDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59EDDB727D9EB7500D240E3 /* MockMainScreenDataProvider.swift */; };
 		C59EDDBA27D9F74C00D240E3 /* MockHero.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59EDDB927D9F74C00D240E3 /* MockHero.swift */; };
+		C59EDDBE27DA521D00D240E3 /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59EDDBD27DA521D00D240E3 /* NetworkServiceTests.swift */; };
 		C5AE63C327144984009BB463 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE63C227144984009BB463 /* AppDelegate.swift */; };
 		C5AE63C527144984009BB463 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE63C427144984009BB463 /* SceneDelegate.swift */; };
 		C5AE63CC2714498C009BB463 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5AE63CB2714498C009BB463 /* Assets.xcassets */; };
@@ -76,6 +77,7 @@
 		C59EDDB527D9EAEE00D240E3 /* MockNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkService.swift; sourceTree = "<group>"; };
 		C59EDDB727D9EB7500D240E3 /* MockMainScreenDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMainScreenDataProvider.swift; sourceTree = "<group>"; };
 		C59EDDB927D9F74C00D240E3 /* MockHero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHero.swift; sourceTree = "<group>"; };
+		C59EDDBD27DA521D00D240E3 /* NetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceTests.swift; sourceTree = "<group>"; };
 		C5AE63BF27144984009BB463 /* MarvelHeroesRSN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarvelHeroesRSN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5AE63C227144984009BB463 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5AE63C427144984009BB463 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 			children = (
 				C59EDDA827D9DB8900D240E3 /* Mocks */,
 				C59A845B274254FC00B193FC /* Entities */,
+				C59EDDBC27DA51EA00D240E3 /* NetworkService */,
 				C59A845C27425A8300B193FC /* HeroesManager */,
 				C59A84692746578F00B193FC /* DataProviders */,
 				C59A845D27425AA100B193FC /* ViewControllers */,
@@ -191,17 +194,9 @@
 		C59A84692746578F00B193FC /* DataProviders */ = {
 			isa = PBXGroup;
 			children = (
-				C59A846A274657DA00B193FC /* MainScreenDataProvider */,
-			);
-			path = DataProviders;
-			sourceTree = "<group>";
-		};
-		C59A846A274657DA00B193FC /* MainScreenDataProvider */ = {
-			isa = PBXGroup;
-			children = (
 				C59A846B274657F900B193FC /* MainScreenDataProviderTests.swift */,
 			);
-			path = MainScreenDataProvider;
+			path = DataProviders;
 			sourceTree = "<group>";
 		};
 		C59EDDA827D9DB8900D240E3 /* Mocks */ = {
@@ -228,6 +223,14 @@
 				C5AE63DD27145252009BB463 /* MainScreenViewController */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		C59EDDBC27DA51EA00D240E3 /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				C59EDDBD27DA521D00D240E3 /* NetworkServiceTests.swift */,
+			);
+			path = NetworkService;
 			sourceTree = "<group>";
 		};
 		C5AE63B627144984009BB463 = {
@@ -500,6 +503,7 @@
 				C59EDDAC27D9DC1300D240E3 /* MockMainScreenView.swift in Sources */,
 				C59EDDB827D9EB7500D240E3 /* MockMainScreenDataProvider.swift in Sources */,
 				C59EDDBA27D9F74C00D240E3 /* MockHero.swift in Sources */,
+				C59EDDBE27DA521D00D240E3 /* NetworkServiceTests.swift in Sources */,
 				C59A846C274657F900B193FC /* MainScreenDataProviderTests.swift in Sources */,
 				C59EDDB027D9DE8600D240E3 /* MockHeroCell.swift in Sources */,
 				C59EDDAE27D9DE4B00D240E3 /* MockCollectionView.swift in Sources */,

@@ -36,13 +36,13 @@ class HeroesManagerTests: XCTestCase {
     }
     
     override func tearDownWithError() throws {
-        sut = nil
         heroWithGoodThumbnails = nil
         heroWithBadPathThumbnails = nil
         heroWithBadExtensionThumbnails = nil
         heroWithCrashedExtensionThumbnails = nil
         heroesWithThumbnailsTestArray = nil
         heroesTestArray = nil
+		sut = nil
     }
 
     // MARK: - Tests that work only with Network
@@ -71,6 +71,7 @@ class HeroesManagerTests: XCTestCase {
         XCTAssertEqual(hero?.id, 2)
         XCTAssertEqual(hero?.name, "TestHeroName2")
         XCTAssertEqual(hero?.description, "TestHeroDescription2")
+		
     }
 
     func testGetHeroByNameFromHeroesManager() {

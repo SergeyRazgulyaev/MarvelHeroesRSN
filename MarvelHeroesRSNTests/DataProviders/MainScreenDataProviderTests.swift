@@ -9,7 +9,7 @@ import XCTest
 @testable import MarvelHeroesRSN
 
 class MainScreenDataProviderTests: XCTestCase {
-	var sut: MainScreenDataProvider!
+	var sut: DataProviderProtocol!
 	
 	var testHero: Hero!
 	var heroesTestArray: [Hero]!
@@ -22,13 +22,14 @@ class MainScreenDataProviderTests: XCTestCase {
 
     
     override func setUpWithError() throws {
+		sut = MainScreenDataProvider()
+		
 		urlParametersContainer = startURLParametersContainer
 		testHero = MockHero.hero1
 		heroesTestArray = [testHero]
 
         networkService = MockNetworkService()
-		heroesManager = HeroesManager()
-		sut = MainScreenDataProvider()
+		heroesManager = MockHeroesManager()
 		mainScreenViewController = MockMainScreenViewController(
 			networkService: networkService,
 			heroesManager: heroesManager,
@@ -38,13 +39,13 @@ class MainScreenDataProviderTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-		sut = nil
 		testHero = nil
 		heroesTestArray = nil
 		urlParametersContainer = nil
         networkService = nil
 		heroesManager = nil
         mainScreenViewController = nil
+		sut = nil
     }
     
 //    func testNumberOfSectionsIsOne() {

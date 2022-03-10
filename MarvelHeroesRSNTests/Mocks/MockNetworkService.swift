@@ -13,8 +13,8 @@ final class MockNetworkService: NetworkServiceProtocol {
 	var delegate: NetworkServiceDelegate?
 
 	func loadHeroesData(limit: Int,
-								 offset: Int,
-								 completion: @escaping ((Result<[HeroWithThumbnails], Error>) -> Void)) {
+						offset: Int,
+						completion: @escaping ((Result<[HeroWithThumbnails], Error>) -> Void)) {
 		isDataLoading = true
 	}
 }
