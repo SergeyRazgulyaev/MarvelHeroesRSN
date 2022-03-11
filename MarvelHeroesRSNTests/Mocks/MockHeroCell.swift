@@ -10,7 +10,6 @@ import UIKit
 
 final class MockHeroCell: MainScreenCollectionViewCell {
 	override func configureCellWithParametersFromNetwork(heroAvatarImage: UIImage, heroName: String) {
-		print("configureCell")
 		heroNameLabel.text = heroName
 		heroAvatarImageView.image = heroAvatarImage
 	}

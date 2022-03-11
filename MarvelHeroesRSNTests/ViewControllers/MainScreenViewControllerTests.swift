@@ -20,7 +20,7 @@ class MainScreenViewControllerTests: XCTestCase {
 		urlParametersContainer = startURLParametersContainer
         networkService = MockNetworkService()
 		heroesManager = MockHeroesManager()
-		dataProvider = MockMainScreenDataProvider()
+		dataProvider = MainScreenDataProvider()
 
 		sut = MainScreenViewController(
 			networkService: networkService,

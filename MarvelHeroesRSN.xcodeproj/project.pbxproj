@@ -17,14 +17,11 @@
 		C59A8464274269B700B193FC /* HeroesManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59A8463274269B700B193FC /* HeroesManagerProtocol.swift */; };
 		C59A846827464F1B00B193FC /* MainScreenDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59A846727464F1B00B193FC /* MainScreenDataProvider.swift */; };
 		C59A846C274657F900B193FC /* MainScreenDataProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59A846B274657F900B193FC /* MainScreenDataProviderTests.swift */; };
-		C59EDDAA27D9DBC200D240E3 /* MockMainScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59EDDA927D9DBC200D240E3 /* MockMainScreenViewController.swift */; };
-		C59EDDAC27D9DC1300D240E3 /* MockMainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59EDDAB27D9DC1300D240E3 /* MockMainScreenView.swift */; };
 		C59EDDAE27D9DE4B00D240E3 /* MockCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59EDDAD27D9DE4B00D240E3 /* MockCollectionView.swift */; };
 		C59EDDB027D9DE8600D240E3 /* MockHeroCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59EDDAF27D9DE8600D240E3 /* MockHeroCell.swift */; };
 		C59EDDB227D9DF4D00D240E3 /* MockHeroesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59EDDB127D9DF4D00D240E3 /* MockHeroesManager.swift */; };
 		C59EDDB427D9E23D00D240E3 /* MockHeroFromNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59EDDB327D9E23D00D240E3 /* MockHeroFromNetwork.swift */; };
 		C59EDDB627D9EAEE00D240E3 /* MockNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59EDDB527D9EAEE00D240E3 /* MockNetworkService.swift */; };
-		C59EDDB827D9EB7500D240E3 /* MockMainScreenDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59EDDB727D9EB7500D240E3 /* MockMainScreenDataProvider.swift */; };
 		C59EDDBA27D9F74C00D240E3 /* MockHero.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59EDDB927D9F74C00D240E3 /* MockHero.swift */; };
 		C59EDDBE27DA521D00D240E3 /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59EDDBD27DA521D00D240E3 /* NetworkServiceTests.swift */; };
 		C5AE63C327144984009BB463 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE63C227144984009BB463 /* AppDelegate.swift */; };
@@ -68,14 +65,11 @@
 		C59A8463274269B700B193FC /* HeroesManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroesManagerProtocol.swift; sourceTree = "<group>"; };
 		C59A846727464F1B00B193FC /* MainScreenDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenDataProvider.swift; sourceTree = "<group>"; };
 		C59A846B274657F900B193FC /* MainScreenDataProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenDataProviderTests.swift; sourceTree = "<group>"; };
-		C59EDDA927D9DBC200D240E3 /* MockMainScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMainScreenViewController.swift; sourceTree = "<group>"; };
-		C59EDDAB27D9DC1300D240E3 /* MockMainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMainScreenView.swift; sourceTree = "<group>"; };
 		C59EDDAD27D9DE4B00D240E3 /* MockCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCollectionView.swift; sourceTree = "<group>"; };
 		C59EDDAF27D9DE8600D240E3 /* MockHeroCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHeroCell.swift; sourceTree = "<group>"; };
 		C59EDDB127D9DF4D00D240E3 /* MockHeroesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHeroesManager.swift; sourceTree = "<group>"; };
 		C59EDDB327D9E23D00D240E3 /* MockHeroFromNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHeroFromNetwork.swift; sourceTree = "<group>"; };
 		C59EDDB527D9EAEE00D240E3 /* MockNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkService.swift; sourceTree = "<group>"; };
-		C59EDDB727D9EB7500D240E3 /* MockMainScreenDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMainScreenDataProvider.swift; sourceTree = "<group>"; };
 		C59EDDB927D9F74C00D240E3 /* MockHero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHero.swift; sourceTree = "<group>"; };
 		C59EDDBD27DA521D00D240E3 /* NetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceTests.swift; sourceTree = "<group>"; };
 		C5AE63BF27144984009BB463 /* MarvelHeroesRSN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarvelHeroesRSN.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -206,9 +200,6 @@
 				C59EDDB927D9F74C00D240E3 /* MockHero.swift */,
 				C59EDDB527D9EAEE00D240E3 /* MockNetworkService.swift */,
 				C59EDDB127D9DF4D00D240E3 /* MockHeroesManager.swift */,
-				C59EDDB727D9EB7500D240E3 /* MockMainScreenDataProvider.swift */,
-				C59EDDA927D9DBC200D240E3 /* MockMainScreenViewController.swift */,
-				C59EDDAB27D9DC1300D240E3 /* MockMainScreenView.swift */,
 				C59EDDAD27D9DE4B00D240E3 /* MockCollectionView.swift */,
 				C59EDDAF27D9DE8600D240E3 /* MockHeroCell.swift */,
 			);
@@ -500,15 +491,12 @@
 				C59A845F27425B1B00B193FC /* HeroesManagerTests.swift in Sources */,
 				C59EDDB227D9DF4D00D240E3 /* MockHeroesManager.swift in Sources */,
 				C59EDDB627D9EAEE00D240E3 /* MockNetworkService.swift in Sources */,
-				C59EDDAC27D9DC1300D240E3 /* MockMainScreenView.swift in Sources */,
-				C59EDDB827D9EB7500D240E3 /* MockMainScreenDataProvider.swift in Sources */,
 				C59EDDBA27D9F74C00D240E3 /* MockHero.swift in Sources */,
 				C59EDDBE27DA521D00D240E3 /* NetworkServiceTests.swift in Sources */,
 				C59A846C274657F900B193FC /* MainScreenDataProviderTests.swift in Sources */,
 				C59EDDB027D9DE8600D240E3 /* MockHeroCell.swift in Sources */,
 				C59EDDAE27D9DE4B00D240E3 /* MockCollectionView.swift in Sources */,
 				C59EDDB427D9E23D00D240E3 /* MockHeroFromNetwork.swift in Sources */,
-				C59EDDAA27D9DBC200D240E3 /* MockMainScreenViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
