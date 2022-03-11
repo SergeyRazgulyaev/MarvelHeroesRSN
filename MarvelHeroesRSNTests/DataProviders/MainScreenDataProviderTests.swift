@@ -17,8 +17,8 @@ class MainScreenDataProviderTests: XCTestCase {
 	var networkService: NetworkServiceProtocol!
 	var heroesManager: HeroesManagerProtocol!
 	var mainScreenViewController: MainScreenViewController!
-
-
+	var collectionView: UICollectionView!
+	var heroCell: MainScreenCollectionViewCell!
 
 	override func setUpWithError() throws {
 		sut = MainScreenDataProvider()
@@ -27,14 +27,24 @@ class MainScreenDataProviderTests: XCTestCase {
 		testHero = MockHero.hero1
 		heroesTestArray = [testHero]
 
-		networkService = MockNetworkService()
+		networkService = MockNetworkService(urlParametersContainer: urlParametersContainer)
 		heroesManager = MockHeroesManager()
 		mainScreenViewController = MainScreenViewController(
 			networkService: networkService,
 			heroesManager: heroesManager,
 			dataProvider: sut)
+		mainScreenViewController.networkService = networkService
+		mainScreenViewController.heroesManager = heroesManager
+		mainScreenViewController.dataProvider = sut
+
 		networkService.delegate = mainScreenViewController
 		sut.owningViewController = mainScreenViewController
+		sut.heroesManager = heroesManager
+		collectionView = sut?.owningViewController?.mainScreenView.collectionView
+		collectionView?.register(MainScreenCollectionViewCell.self,
+								 forCellWithReuseIdentifier: MainScreenCollectionViewCell.cellIdentifier)
+		collectionView.frame = CGRect(x: 0, y: 0, width: 300, height: 500)
+		heroCell = collectionView?.dequeueReusableCell(withReuseIdentifier: MainScreenCollectionViewCell.cellIdentifier, for: IndexPath(item: 0, section: 0)) as? MainScreenCollectionViewCell
 	}
 
 	override func tearDownWithError() throws {
@@ -44,18 +54,20 @@ class MainScreenDataProviderTests: XCTestCase {
 		networkService = nil
 		heroesManager = nil
 		mainScreenViewController = nil
+		collectionView = nil
+		heroCell = nil
 		sut = nil
 	}
 
 	func testNumberOfSectionsIsOne() {
-		let collectionView = sut?.owningViewController?.mainScreenView.collectionView
-
 		XCTAssertEqual(collectionView?.numberOfSections, 1)
 	}
 
 	func testNumberOfItemsInSectionAtStartIsZero() {
-		let collectionView = sut?.owningViewController?.mainScreenView.collectionView
-		
 		XCTAssertEqual(collectionView?.numberOfItems(inSection: 0), 0)
+	}
+
+	func testCellInFirstItemIsNotNil() {
+		XCTAssertNotNil(heroCell)
 	}
 }

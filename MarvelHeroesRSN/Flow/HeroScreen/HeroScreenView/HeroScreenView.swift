@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HeroScreenView: UIView {
+final class HeroScreenView: UIView {
 	//MARK: - UI properties
 	private var heroAvatarViewHeight: CGFloat { UIScreen.main.bounds.width }
 	private let heroNameLabelHeight: CGFloat = 60.0

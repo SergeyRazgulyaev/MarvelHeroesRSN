@@ -18,17 +18,21 @@ class MainScreenViewControllerTests: XCTestCase {
 
 	override func setUpWithError() throws {
 		urlParametersContainer = startURLParametersContainer
-		networkService = MockNetworkService()
+		networkService = MockNetworkService(urlParametersContainer: urlParametersContainer)
 		heroesManager = MockHeroesManager()
-		dataProvider = MainScreenDataProvider()
+		dataProvider = MockMainScreenDataProvider()
 
 		sut = MainScreenViewController(
 			networkService: networkService,
 			heroesManager: heroesManager,
 			dataProvider: dataProvider)
+		sut.networkService = networkService
+		sut.heroesManager = heroesManager
+		sut.dataProvider = dataProvider
 
 		networkService.delegate = sut
 		dataProvider.owningViewController = sut
+		dataProvider.heroesManager = heroesManager
 	}
 
 	override func tearDownWithError() throws {
@@ -56,40 +60,36 @@ class MainScreenViewControllerTests: XCTestCase {
 	func testWhenViewIsLoadedCollectionViewDelegateIsSet() {
 		sut?.loadViewIfNeeded()
 
-		XCTAssertTrue(sut?.mainScreenView.collectionView.delegate is MainScreenDataProvider)
+		XCTAssertTrue(sut?.mainScreenView.collectionView.delegate is MockMainScreenDataProvider)
 	}
 
 	func testWhenViewIsLoadedCollectionViewDataSourceIsSet() {
 		sut?.loadViewIfNeeded()
 
-		XCTAssertTrue(sut?.mainScreenView.collectionView.dataSource is MainScreenDataProvider)
+		XCTAssertTrue(sut?.mainScreenView.collectionView.dataSource is MockMainScreenDataProvider)
 	}
 
 	func testWhenViewIsLoadedCollectionViewPrefetchDataSourceIsSet() {
 		sut?.loadViewIfNeeded()
 
-		XCTAssertTrue(sut?.mainScreenView.collectionView.prefetchDataSource is MainScreenDataProvider)
+		XCTAssertTrue(sut?.mainScreenView.collectionView.prefetchDataSource is MockMainScreenDataProvider)
 	}
 
 	func testWhenViewIsLoadedCollectionViewDelegateEqualsCollectionViewDataSource() {
 		XCTAssertEqual(
-			sut?.mainScreenView.collectionView.delegate as? MainScreenDataProvider,
-			sut?.mainScreenView.collectionView.dataSource as? MainScreenDataProvider)
+			sut?.mainScreenView.collectionView.delegate as? MockMainScreenDataProvider,
+			sut?.mainScreenView.collectionView.dataSource as? MockMainScreenDataProvider)
 	}
 
 	func testWhenViewIsLoadedCollectionViewDelegateEqualsCollectionViewPrefetchDataSource() {
 		XCTAssertEqual(
-			sut?.mainScreenView.collectionView.delegate as? MainScreenDataProvider,
-			sut?.mainScreenView.collectionView.prefetchDataSource as? MainScreenDataProvider)
+			sut?.mainScreenView.collectionView.delegate as? MockMainScreenDataProvider,
+			sut?.mainScreenView.collectionView.prefetchDataSource as? MockMainScreenDataProvider)
 	}
 
 	func testWhenViewIsLoadedCollectionViewDataSourceEqualsCollectionViewPrefetchDataSource() {
 		XCTAssertEqual(
-			sut?.mainScreenView.collectionView.dataSource as? MainScreenDataProvider,
-			sut?.mainScreenView.collectionView.prefetchDataSource as? MainScreenDataProvider)
-	}
-
-	func testLoadHeroesDataFromNetWorkMethodIsWorking() {
-		sut?.loadHeroesDataFromNetWorkIfNeeded()
+			sut?.mainScreenView.collectionView.dataSource as? MockMainScreenDataProvider,
+			sut?.mainScreenView.collectionView.prefetchDataSource as? MockMainScreenDataProvider)
 	}
 }

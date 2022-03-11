@@ -7,20 +7,20 @@
 
 import UIKit
 
-class MainScreenViewController: UIViewController, Alertable {
+final class MainScreenViewController: UIViewController, Alertable {
 	//MARK: - UI properties
 	private(set) lazy var mainScreenView: MainScreenView = {
 		return MainScreenView()
 	}()
 
 	//MARK: - Properties for interaction with HeroesStorage
-	private(set) var heroesManager: HeroesManagerProtocol?
+	var heroesManager: HeroesManagerProtocol?
 
 	//MARK: - Properties for interaction with CollectionView
-	private(set) var dataProvider: DataProviderProtocol?
+	var dataProvider: DataProviderProtocol?
 
 	//MARK: - Properties for interaction with Network
-	private(set) var networkService: NetworkServiceProtocol?
+	var networkService: NetworkServiceProtocol?
 	private let limit: Int = 50
 	private var offset: Int = 0
 	private var isCutOffUnsuccessfulHeroesCard = true

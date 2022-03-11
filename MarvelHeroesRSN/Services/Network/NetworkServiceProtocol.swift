@@ -12,6 +12,9 @@ protocol NetworkServiceProtocol {
 	var isDataLoading: Bool { get }
 	var delegate: NetworkServiceDelegate? { get set }
 
+	// MARK: - Init
+	init(urlParametersContainer: URLParametersContainer)
+
 	// MARK: - Methods
 	func loadHeroesData(limit: Int,
 						offset: Int,

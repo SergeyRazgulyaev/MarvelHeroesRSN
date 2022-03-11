@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainScreenCollectionViewCell: UICollectionViewCell {
+final class MainScreenCollectionViewCell: UICollectionViewCell {
 	//MARK: - UI properties
 	static let cellIdentifier: String = String(describing: self)
 

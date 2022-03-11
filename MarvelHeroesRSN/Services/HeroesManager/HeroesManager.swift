@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HeroesManager: HeroesManagerProtocol {
+final class HeroesManager: HeroesManagerProtocol {
 	//MARK: - Properties
 	private var heroesStorage: [Hero] = []
 

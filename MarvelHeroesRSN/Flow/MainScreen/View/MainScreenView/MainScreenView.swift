@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainScreenView: UIView {
+final class MainScreenView: UIView {
 	//MARK: - UI properties
 	static let heroNameLabelHeight: CGFloat = 25.0
 	private let headerViewHeight: CGFloat = 90.0

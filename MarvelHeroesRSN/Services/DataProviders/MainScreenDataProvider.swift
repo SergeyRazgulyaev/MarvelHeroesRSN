@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainScreenDataProvider: NSObject, DataProviderProtocol {
+final class MainScreenDataProvider: NSObject, DataProviderProtocol {
 	//MARK: - Properties
 	private let cellNumberFromEndForPrefetching: Int = 4
 	private var heroes: [Hero] = []

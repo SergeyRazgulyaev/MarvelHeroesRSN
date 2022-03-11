@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NetworkService: NetworkServiceProtocol {
+final class NetworkService: NetworkServiceProtocol {
 	//MARK: - Properties for Interaction with Network
 	static let session: URLSession = {
 		let configuration = URLSessionConfiguration.default
