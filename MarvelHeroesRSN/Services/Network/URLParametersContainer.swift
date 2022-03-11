@@ -8,14 +8,14 @@
 import Foundation
 
 struct URLParametersContainer {
-    var urlScheme: String
-    var baseURL: String
-    var urlPath: String
-    var ts: Int
-    var apiKey: String
-    var hash: String
-    var limit: Int?
-    var offset: Int?
+	var urlScheme: String
+	var baseURL: String
+	var urlPath: String
+	var ts: Int
+	var apiKey: String
+	var hash: String
+	var limit: Int?
+	var offset: Int?
 }
 
 let startURLParametersContainer = URLParametersContainer(

@@ -9,7 +9,8 @@ import UIKit
 @testable import MarvelHeroesRSN
 
 final class MockHeroCell: MainScreenCollectionViewCell {
-	override func configureCellWithParametersFromNetwork(heroAvatarImage: UIImage, heroName: String) {
+	override func configureCellWithParametersFromNetwork(heroAvatarImage: UIImage,
+														 heroName: String) {
 		heroNameLabel.text = heroName
 		heroAvatarImageView.image = heroAvatarImage
 	}

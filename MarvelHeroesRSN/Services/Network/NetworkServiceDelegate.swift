@@ -8,5 +8,6 @@
 import Foundation
 
 protocol NetworkServiceDelegate: AnyObject {
+	// MARK: - Methods
 	func configureUIViewControllerWithoutNetworkConnection()
 }

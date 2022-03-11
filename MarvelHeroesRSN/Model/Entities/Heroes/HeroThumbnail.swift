@@ -8,11 +8,11 @@
 import Foundation
 
 struct HeroThumbnail: Codable {
-    let thumbnailPath: String
-    let thumbnailExtension: String
+	let thumbnailPath: String
+	let thumbnailExtension: String
 
-    enum CodingKeys: String, CodingKey {
-        case thumbnailPath = "path"
-        case thumbnailExtension = "extension"
-    }
+	enum CodingKeys: String, CodingKey {
+		case thumbnailPath = "path"
+		case thumbnailExtension = "extension"
+	}
 }

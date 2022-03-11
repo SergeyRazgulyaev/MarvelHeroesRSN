@@ -22,7 +22,8 @@ final class MockCollectionView: UICollectionView {
 		layout.itemSize = CGSize(width: 100, height: 100)
 		super.init(frame: .zero,
 				   collectionViewLayout: layout)
-		register(MockHeroCell.self, forCellWithReuseIdentifier: MainScreenCollectionViewCell.cellIdentifier)
+		register(MockHeroCell.self,
+				 forCellWithReuseIdentifier: MainScreenCollectionViewCell.cellIdentifier)
 		backgroundColor = .black
 		translatesAutoresizingMaskIntoConstraints = false
 	}
@@ -35,7 +36,7 @@ final class MockCollectionView: UICollectionView {
 		isCellForItemAtZeroIndexPathActivated = true
 		return super.cellForItem(at: indexPath)
 	}
-
+	
 	override func dequeueReusableCell(withReuseIdentifier identifier: String,
 									  for indexPath: IndexPath)
 	-> UICollectionViewCell {

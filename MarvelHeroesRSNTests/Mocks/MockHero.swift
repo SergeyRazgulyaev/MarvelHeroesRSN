@@ -10,12 +10,14 @@ import UIKit
 
 final class MockHero {
 	static let hero1 = Hero(id: 1,
-							  name: "TestHeroName1",
-							  description: "TestHeroDescription1",
-							  image: UIImage(systemName: "tortoise.fill")!)
+							name: "TestHeroName1",
+							description: "TestHeroDescription1",
+							image: UIImage(systemName: "tortoise.fill")!
+	)
 
 	static let hero2 = Hero(id: 2,
-							  name: "TestHeroName2",
-							  description: "TestHeroDescription2",
-							  image: UIImage(systemName: "hare.fill")!)
+							name: "TestHeroName2",
+							description: "TestHeroDescription2",
+							image: UIImage(systemName: "hare.fill")!
+	)
 }

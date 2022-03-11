@@ -38,6 +38,4 @@ final class MockHeroesManager: HeroesManagerProtocol {
 		heroesStorage = []
 		isHeroesStorageCleared = true
 	}
-
-
 }
