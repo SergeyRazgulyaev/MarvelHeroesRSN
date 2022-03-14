@@ -33,6 +33,7 @@ class HeroScreenViewControllerTests: XCTestCase {
 
 	func testHeroScreenViewControllerHasHeroAvatarView() {
 		XCTAssertNotNil(sut.heroScreenView.heroAvatarView)
+		XCTAssertTrue(sut.heroScreenView.heroAvatarView.isDescendant(of: sut.heroScreenView))
 	}
 
 	func testHeroAvatarViewValue() {
@@ -41,6 +42,7 @@ class HeroScreenViewControllerTests: XCTestCase {
 
 	func testHeroScreenViewControllerHasHeroNameLabel() {
 		XCTAssertNotNil(sut.heroScreenView.heroNameLabel)
+		XCTAssertTrue(sut.heroScreenView.heroNameLabel.isDescendant(of: sut.heroScreenView))
 	}
 
 	func testHeroNameLabelValue() {
@@ -49,7 +51,7 @@ class HeroScreenViewControllerTests: XCTestCase {
 
 	func testHeroScreenViewControllerHasHeroDescriptionTextView() {
 		XCTAssertNotNil(sut.heroScreenView.heroDescriptionTextView)
-
+		XCTAssertTrue(sut.heroScreenView.heroDescriptionTextView.isDescendant(of: sut.heroScreenView))
 	}
 
 	func testHeroDescriptionTextViewValue() {

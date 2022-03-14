@@ -9,6 +9,7 @@ import Foundation
 
 protocol NetworkServiceProtocol {
 	// MARK: - Properties
+	var urlSession: URLSessionProtocol { get set }
 	var isDataLoading: Bool { get }
 	var delegate: NetworkServiceDelegate? { get set }
 

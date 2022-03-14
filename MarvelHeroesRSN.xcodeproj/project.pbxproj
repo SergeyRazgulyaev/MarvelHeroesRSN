@@ -24,6 +24,9 @@
 		C59EDDBE27DA521D00D240E3 /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59EDDBD27DA521D00D240E3 /* NetworkServiceTests.swift */; };
 		C59EDDC427DB364900D240E3 /* MockMainScreenDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59EDDC327DB364900D240E3 /* MockMainScreenDataProvider.swift */; };
 		C59EDDC627DF378C00D240E3 /* HeroScreenViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59EDDC527DF378C00D240E3 /* HeroScreenViewControllerTests.swift */; };
+		C59EDDC827DF7A0D00D240E3 /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59EDDC727DF7A0D00D240E3 /* MockURLSession.swift */; };
+		C59EDDCF27DF800900D240E3 /* URLSessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59EDDCE27DF800900D240E3 /* URLSessionProtocol.swift */; };
+		C59EDDD127DF811800D240E3 /* URLSessionWithExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59EDDD027DF811800D240E3 /* URLSessionWithExtension.swift */; };
 		C5AE63C327144984009BB463 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE63C227144984009BB463 /* AppDelegate.swift */; };
 		C5AE63C527144984009BB463 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE63C427144984009BB463 /* SceneDelegate.swift */; };
 		C5AE63CC2714498C009BB463 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5AE63CB2714498C009BB463 /* Assets.xcassets */; };
@@ -72,6 +75,9 @@
 		C59EDDBD27DA521D00D240E3 /* NetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceTests.swift; sourceTree = "<group>"; };
 		C59EDDC327DB364900D240E3 /* MockMainScreenDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMainScreenDataProvider.swift; sourceTree = "<group>"; };
 		C59EDDC527DF378C00D240E3 /* HeroScreenViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroScreenViewControllerTests.swift; sourceTree = "<group>"; };
+		C59EDDC727DF7A0D00D240E3 /* MockURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSession.swift; sourceTree = "<group>"; };
+		C59EDDCE27DF800900D240E3 /* URLSessionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionProtocol.swift; sourceTree = "<group>"; };
+		C59EDDD027DF811800D240E3 /* URLSessionWithExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionWithExtension.swift; sourceTree = "<group>"; };
 		C5AE63BF27144984009BB463 /* MarvelHeroesRSN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarvelHeroesRSN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5AE63C227144984009BB463 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5AE63C427144984009BB463 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -124,7 +130,7 @@
 			children = (
 				C59EDDA827D9DB8900D240E3 /* Mocks */,
 				C59A845B274254FC00B193FC /* Entities */,
-				C59EDDBC27DA51EA00D240E3 /* NetworkService */,
+				C59EDDBC27DA51EA00D240E3 /* Network */,
 				C59A845C27425A8300B193FC /* HeroesManager */,
 				C59A84692746578F00B193FC /* DataProviders */,
 				C59A845D27425AA100B193FC /* ViewControllers */,
@@ -189,6 +195,7 @@
 		C59EDDA827D9DB8900D240E3 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				C59EDDC727DF7A0D00D240E3 /* MockURLSession.swift */,
 				C59EDDB327D9E23D00D240E3 /* MockHeroFromNetwork.swift */,
 				C59EDDB927D9F74C00D240E3 /* MockHero.swift */,
 				C59EDDB527D9EAEE00D240E3 /* MockNetworkService.swift */,
@@ -208,10 +215,20 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		C59EDDBC27DA51EA00D240E3 /* NetworkService */ = {
+		C59EDDBC27DA51EA00D240E3 /* Network */ = {
 			isa = PBXGroup;
 			children = (
 				C59EDDBD27DA521D00D240E3 /* NetworkServiceTests.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		C59EDDCB27DF7D5B00D240E3 /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				C59A15DB27171809007B5347 /* NetworkServiceProtocol.swift */,
+				C59A16202717883E007B5347 /* NetworkServiceDelegate.swift */,
+				C5AE64162715979B009BB463 /* NetworkService.swift */,
 			);
 			path = NetworkService;
 			sourceTree = "<group>";
@@ -295,10 +312,10 @@
 		C5AE63DB2714518D009BB463 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				C59A15DB27171809007B5347 /* NetworkServiceProtocol.swift */,
-				C59A16202717883E007B5347 /* NetworkServiceDelegate.swift */,
-				C5AE64162715979B009BB463 /* NetworkService.swift */,
+				C59EDDCE27DF800900D240E3 /* URLSessionProtocol.swift */,
+				C59EDDD027DF811800D240E3 /* URLSessionWithExtension.swift */,
 				C5D283CB271E233400F13297 /* URLParametersContainer.swift */,
+				C59EDDCB27DF7D5B00D240E3 /* NetworkService */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -478,6 +495,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C59EDDC827DF7A0D00D240E3 /* MockURLSession.swift in Sources */,
 				C59EDDC427DB364900D240E3 /* MockMainScreenDataProvider.swift in Sources */,
 				C59A8453273EBB4300B193FC /* MainScreenViewControllerTests.swift in Sources */,
 				C59A845A274248CE00B193FC /* HeroTests.swift in Sources */,
@@ -503,6 +521,7 @@
 				C59A16212717883E007B5347 /* NetworkServiceDelegate.swift in Sources */,
 				C59A846827464F1B00B193FC /* MainScreenDataProvider.swift in Sources */,
 				C5AE63C527144984009BB463 /* SceneDelegate.swift in Sources */,
+				C59EDDD127DF811800D240E3 /* URLSessionWithExtension.swift in Sources */,
 				C5AE63F527158CB2009BB463 /* HeroThumbnail.swift in Sources */,
 				C5AE63F327158C8D009BB463 /* HeroWithThumbnails.swift in Sources */,
 				C5AE63EF27158C15009BB463 /* GetHeroesResult.swift in Sources */,
@@ -513,6 +532,7 @@
 				C5D283CC271E233400F13297 /* URLParametersContainer.swift in Sources */,
 				C59A161F2717807A007B5347 /* Alertable.swift in Sources */,
 				C5AE64172715979B009BB463 /* NetworkService.swift in Sources */,
+				C59EDDCF27DF800900D240E3 /* URLSessionProtocol.swift in Sources */,
 				C5AE64192715F642009BB463 /* Hero.swift in Sources */,
 				C5AE63E427145816009BB463 /* MainScreenView.swift in Sources */,
 				C59A15DC27171809007B5347 /* NetworkServiceProtocol.swift in Sources */,

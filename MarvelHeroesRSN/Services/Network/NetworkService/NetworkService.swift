@@ -9,7 +9,7 @@ import UIKit
 
 final class NetworkService: NetworkServiceProtocol {
 	//MARK: - Properties for Interaction with Network
-	static let session: URLSession = {
+	lazy var urlSession: URLSessionProtocol = {
 		let configuration = URLSessionConfiguration.default
 		configuration.timeoutIntervalForRequest = 20
 		let session = URLSession(configuration: configuration)
@@ -59,7 +59,7 @@ final class NetworkService: NetworkServiceProtocol {
 		configureURLParametersContainerWith(limit: limit, offset: offset)
 		let url = urlComponents.url?.absoluteURL
 		guard let url = url else { return }
-		let task = NetworkService.session.dataTask(with: url) { (data, response, error) in
+		let task = urlSession.dataTask(with: url) { (data, response, error) in
 			guard let data = data else {
 				self.delegate?.configureUIViewControllerWithoutNetworkConnection()
 				return

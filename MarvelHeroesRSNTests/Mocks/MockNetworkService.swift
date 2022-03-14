@@ -9,6 +9,13 @@ import Foundation
 @testable import MarvelHeroesRSN
 
 final class MockNetworkService: NetworkServiceProtocol {
+	lazy var urlSession: URLSessionProtocol = {
+		let configuration = URLSessionConfiguration.default
+		configuration.timeoutIntervalForRequest = 20
+		let session = URLSession(configuration: configuration)
+		return session
+	}()
+	
 	var isDataLoading: Bool = false
 	var delegate: NetworkServiceDelegate?
 	var urlParametersContainer: URLParametersContainer

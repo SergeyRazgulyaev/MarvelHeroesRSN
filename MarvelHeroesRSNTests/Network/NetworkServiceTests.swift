@@ -10,7 +10,8 @@ import XCTest
 
 class NetworkServiceTests: XCTestCase {
 	var sut: NetworkServiceProtocol!
-	
+
+	let mockURLSession = MockURLSession()
 	let limit: Int = 50
 	let offset: Int = 0
 	var urlParametersContainer: URLParametersContainer!
@@ -18,7 +19,7 @@ class NetworkServiceTests: XCTestCase {
 	override func setUpWithError() throws {
 		urlParametersContainer = startURLParametersContainer
 		sut = NetworkService(urlParametersContainer: urlParametersContainer)
-
+		sut.urlSession = mockURLSession
 	}
 
 	override func tearDownWithError() throws {
@@ -29,5 +30,19 @@ class NetworkServiceTests: XCTestCase {
 	func testIsDataLoading() {
 		sut.loadHeroesData(limit: limit, offset: offset) { _ in }
 		XCTAssertTrue(sut.isDataLoading)
+	}
+
+	func testLoadHeroesDataMethodUsesCorrectHost() {
+		let completionHandler = { (result: (Result<[HeroWithThumbnails], Error>)) -> () in }
+		sut.loadHeroesData(limit: limit, offset: offset, completion: completionHandler)
+
+		guard let url = mockURLSession.url else {
+			XCTFail()
+			return
+		}
+
+		let urlComponents = URLComponents(url: url,
+										  resolvingAgainstBaseURL: true)
+		XCTAssertEqual(urlComponents?.host, "gateway.marvel.com")
 	}
 }
