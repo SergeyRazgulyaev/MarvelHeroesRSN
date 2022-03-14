@@ -9,7 +9,7 @@ import UIKit
 
 final class HeroScreenViewController: UIViewController {
 	//MARK: - UI properties
-	private lazy var heroScreenView: HeroScreenView = {
+	private(set) lazy var heroScreenView: HeroScreenView = {
 		return HeroScreenView()
 	}()
 

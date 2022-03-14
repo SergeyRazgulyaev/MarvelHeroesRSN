@@ -70,4 +70,12 @@ class MainScreenDataProviderTests: XCTestCase {
 	func testCellInFirstItemIsNotNil() {
 		XCTAssertNotNil(heroCell)
 	}
+
+	func testCellInFirstItemHasLabel() {
+		XCTAssertNotNil(heroCell.heroNameLabel)
+	}
+
+	func testCellInFirstItemHasImage() {
+		XCTAssertNotNil(heroCell.heroAvatarImageView)
+	}
 }
