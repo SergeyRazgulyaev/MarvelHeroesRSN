@@ -32,17 +32,27 @@ class NetworkServiceTests: XCTestCase {
 		XCTAssertTrue(sut.isDataLoading)
 	}
 
-	func testLoadHeroesDataMethodUsesCorrectHost() {
-		let completionHandler = { (result: (Result<[HeroWithThumbnails], Error>)) -> () in }
+	func testLoadHeroesDataMethodUsesCorrectURLComponents() {
+		let completionHandler = { (_: (Result<[HeroWithThumbnails], Error>)) -> () in }
 		sut.loadHeroesData(limit: limit, offset: offset, completion: completionHandler)
-
+		
 		guard let url = mockURLSession.url else {
-			XCTFail()
 			return
 		}
+		let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
 
-		let urlComponents = URLComponents(url: url,
-										  resolvingAgainstBaseURL: true)
+		guard let queryItems = urlComponents?.queryItems else {
+			return
+		}
+		let queryItemTS = URLQueryItem(name: "ts", value: "1")
+		let queryItemAPIKey = URLQueryItem(name: "apikey", value: "2acb17a14fab947ec914f6731a6f3585")
+		let queryItemHash = URLQueryItem(name: "hash", value: "7a082702e822cdb6e752c8ca132ccd92")
+
+		XCTAssertEqual(urlComponents?.scheme, "https")
 		XCTAssertEqual(urlComponents?.host, "gateway.marvel.com")
+		XCTAssertEqual(urlComponents?.path, "/v1/public/characters")
+		XCTAssertTrue(queryItems.contains(queryItemTS))
+		XCTAssertTrue(queryItems.contains(queryItemAPIKey))
+		XCTAssertTrue(queryItems.contains(queryItemHash))
 	}
 }
